@@ -1,0 +1,78 @@
+<% if (language === "en") { %>
+    <div style="font-family: Helvetica,Arial,sans-serif; min-width: 1000px; overflow:auto; padding: 20px 0;">
+        <section class="begin" style="text-align: center; color: <%= process.env.WEBSITE_COLOR %>; margin-bottom: 20px;">
+            <img src="<%= process.env.BASE_API_URL %>/assets/images/stores/UbuyBlues_Logo_merged_Purple.webp" alt="<%= process.env.WEBSITE_NAME %> Image"
+                style="width: 100px; height: 100px;">
+        </section>
+        <section class="content"
+            style="width: 80%; border: 1px solid <%= process.env.WEBSITE_COLOR %>; margin: auto; padding: 20px; line-height: 2;">
+            <h2 style="text-align: center;">Block Store In <%= process.env.WEBSITE_NAME %></h2>
+            <h3>Dear <span style="font-weight: bold; color: <%= process.env.WEBSITE_COLOR %>">Merchant</span>,</h3>
+            <p>We Regret To Inform You That Your Merchant Account Has Been Blocked On Our Site .
+            </p>
+            <h4>Your Account ID: <%= adminId %></h4>
+            <h4>Your Store ID: <%= storeId %></h4>
+            <p>This decision is based on site policies which must be adhered to.</p>
+            <p>Thank you for your understanding .</p>
+            <h4>Best regards,</h4>
+            <h4 style="line-height: 0; color: <%= process.env.WEBSITE_COLOR %>;">The <%= process.env.WEBSITE_NAME %> Team</h4>
+        </section>
+    </div>
+<% } else if (language === "ar") { %>
+    <div style="font-family: Helvetica,Arial,sans-serif; min-width: 1000px; overflow:auto; padding: 20px 0; direction: rtl;">
+        <section class="begin" style="text-align: center; color: <%= process.env.WEBSITE_COLOR %>; margin-bottom: 20px;">
+            <img src="<%= process.env.BASE_API_URL %>/assets/images/stores/UbuyBlues_Logo_merged_Purple.webp" alt="<%= process.env.WEBSITE_NAME %> Image"
+                style="width: 100px; height: 100px;">
+        </section>
+        <section class="content"
+            style="width: 80%; border: 1px solid <%= process.env.WEBSITE_COLOR %>; margin: auto; padding: 20px; line-height: 2;">
+            <h2 style="text-align: center;">حظر متجر في <%= process.env.WEBSITE_NAME %></h2>
+            <h3>عزيزي <span style="font-weight: bold; color: <%= process.env.WEBSITE_COLOR %>">التاجر</span>,</h3>
+            <p>نأسف لإبلاغكم بأن حساب التاجر الخاص بكم قد تم حظره على موقعنا .</p>
+            <h4>معرّف الحساب الخاص بك : <%= adminId %></h4>
+            <h4>معرّف المتجر الخاص بك : <%= storeId %></h4>
+            <p>هذا القرار نابع من سياسات الموقع والتي يتعين الامتثال لها .</p>
+            <p>شكراً لتفهمكم .</p>
+            <h4>أطيب التحيات,</h4>
+            <h4 style="line-height: 0; color: <%= process.env.WEBSITE_COLOR %>;">فريق عمل <%= process.env.WEBSITE_NAME %></h4>
+        </section>
+    </div>
+<% } else if (language === "de") { %>
+    <div style="font-family: Helvetica,Arial,sans-serif; min-width: 1000px; overflow:auto; padding: 20px 0;">
+        <section class="begin" style="text-align: center; color: <%= process.env.WEBSITE_COLOR %>; margin-bottom: 20px;">
+            <img src="<%= process.env.BASE_API_URL %>/assets/images/stores/UbuyBlues_Logo_merged_Purple.webp" alt="<%= process.env.WEBSITE_NAME %> Image"
+                style="width: 100px; height: 100px;">
+        </section>
+        <section class="content"
+            style="width: 80%; border: 1px solid <%= process.env.WEBSITE_COLOR %>; margin: auto; padding: 20px; line-height: 2;">
+            <h2 style="text-align: center;">Block Store im <%= process.env.WEBSITE_NAME %></h2>
+            <h3>Sehr geehrte/r <span style="font-weight: bold; color: <%= process.env.WEBSITE_COLOR %>">Händler</span>,</h3>
+            <p>Wir bedauern, Ihnen mitteilen zu müssen, dass Ihr Händlerkonto auf unserer Seite gesperrt wurde .</p>
+            <h4>Ihre Kontonummer: <%= adminId %></h4>
+            <h4>Ihre Geschäft-ID: <%= storeId %></h4>
+            <p>Diese Entscheidung basiert auf den Richtlinien der Seite, die eingehalten werden müssen .</p>
+            <p>Vielen Dank für Ihr Verständnis .</p>
+            <h4>Mit freundlichen Grüßen,</h4>
+            <h4 style="line-height: 0; color: <%= process.env.WEBSITE_COLOR %>;">Das <%= process.env.WEBSITE_NAME %>-Team</h4>
+        </section>
+    </div>
+<% } else { %>
+    <div style="font-family: Helvetica,Arial,sans-serif; min-width: 1000px; overflow:auto; padding: 20px 0;">
+        <section class="begin" style="text-align: center; color: <%= process.env.WEBSITE_COLOR %>; margin-bottom: 20px;">
+            <img src="<%= process.env.BASE_API_URL %>/assets/images/stores/UbuyBlues_Logo_merged_Purple.webp" alt="<%= process.env.WEBSITE_NAME %> Image"
+                style="width: 100px; height: 100px;">
+        </section>
+        <section class="content"
+            style="width: 80%; border: 1px solid <%= process.env.WEBSITE_COLOR %>; margin: auto; padding: 20px; line-height: 2;">
+            <h2 style="text-align: center;"><%= process.env.WEBSITE_NAME %>'ta Blok Mağazası</h2>
+            <h3>Sayın <span style="font-weight: bold; color: <%= process.env.WEBSITE_COLOR %>">Satıcı</span>,</h3>
+            <p>Üzülerek bildiririz ki, satıcı hesabınız sitemizde engellenmiştir .</p>
+            <h4>Hesap Kimliğiniz: <%= adminId %></h4>
+            <h4>Mağaza Kimliğiniz: <%= storeId %></h4>
+            <p>Bu karar, uyulması gereken site politikalarına dayanmaktadır .</p>
+            <p>Anlayışınız için teşekkür ederiz .</p>
+            <h4>Saygılarımla,</h4>
+            <h4 style="line-height: 0; color: <%= process.env.WEBSITE_COLOR %>;"><%= process.env.WEBSITE_NAME %> Ekibi</h4>
+        </section>
+    </div>
+<% } %>

@@ -1,0 +1,101 @@
+<% if (language === "en") { %>
+    <div style="font-family: Helvetica,Arial,sans-serif; min-width: 1000px; overflow:auto; padding: 20px 0;">
+        <section class="begin" style="text-align: center; color: <%= process.env.WEBSITE_COLOR %>; margin-bottom: 20px;">
+            <img src="<%= process.env.BASE_API_URL %>/assets/images/stores/UbuyBlues_Logo_merged_Purple.webp" alt="<%= process.env.WEBSITE_NAME %> Image"
+                style="width: 100px; height: 100px;">
+        </section>
+        <section class="content"
+            style="width: 80%; border: 1px solid <%= process.env.WEBSITE_COLOR %>; margin: auto; padding: 20px; line-height: 2;">
+            <h2 style="text-align: center;">
+                Accept The Store Addition Request At <%= process.env.WEBSITE_NAME %>
+            </h2>
+            <h3>Dear <span style="font-weight: bold; color: <%= process.env.WEBSITE_COLOR %>">Merchant</span>,</h3>
+            <p>We are pleased to inform you that your request to open a merchant account on our
+                website has been approved .
+            </p>
+            <h4>Admin Dashboard Login Link: <a href="<%= process.env.WEBSITE_DASHBOARD_URL %>/login">Admin Dashboard Login</a></h4>
+            <h4>Your Account ID: <%= adminId %>
+            </h4>
+            <h4>Your Store ID: <%= storeId %>
+            </h4>
+            <h4>Your Account Password: <%= password %>
+            </h4>
+            <p>We look forward to collaborating with you and hope that your experience with us
+                will be exceptional and
+                successful .</p>
+            <p>Thank you for joining us, and we wish you all the best .</p>
+            <h4>Best regards,</h4>
+            <h4 style="line-height: 0; color: <%= process.env.WEBSITE_COLOR %>;">The <%= process.env.WEBSITE_NAME %> Team</h4>
+        </section>
+    </div>
+<% } else if (language === "ar") { %>
+    <div style="font-family: Helvetica,Arial,sans-serif; min-width: 1000px; overflow:auto; padding: 20px 0; direction: rtl;">
+        <section class="begin" style="text-align: center; color: <%= process.env.WEBSITE_COLOR %>; margin-bottom: 20px;">
+            <img src="<%= process.env.BASE_API_URL %>/assets/images/stores/UbuyBlues_Logo_merged_Purple.webp" alt="<%= process.env.WEBSITE_NAME %> Image"
+                style="width: 100px; height: 100px;">
+        </section>
+        <section class="content"
+            style="width: 80%; border: 1px solid <%= process.env.WEBSITE_COLOR %>; margin: auto; padding: 20px; line-height: 2;">
+            <h2 style="text-align: center;">
+                الموافقة على طلب إنشاء متجر لدى <%= process.env.WEBSITE_NAME %>
+            </h2>
+            <h3>عزيزي <span style="font-weight: bold; color: <%= process.env.WEBSITE_COLOR %>">التاجر</span>,</h3>
+            <p>يسرنا أن نعلمكم أن طلب فتح حساب تاجر على موقعنا قد تم قبوله .
+            </p>
+            <h4>رابطة صفحة تسجيل الدخول للمسؤول : <a href="<%= process.env.WEBSITE_DASHBOARD_URL %>/login">تسجيل دخول المسؤول</a></h4>
+            <h4>معرّف الحساب الخاص بك : <%= adminId %></h4>
+            <h4>معرّف المتجر الخاص بك : <%= storeId %></h4>
+            <h4>كلمة سر الحساب الخاص بك : <%= password %></h4>
+            <p>نتطلع إلى التعاون معكم ونأمل أن تكون تجربتكم معنا مميزة وناجحة .</p>
+            <p>نشكركم على انضمامكم إلينا ونتمنى لكم كل التوفيق .</p>
+            <h4>أطيب التحيات,</h4>
+            <h4 style="line-height: 0; color: <%= process.env.WEBSITE_COLOR %>;">فريق عمل <%= process.env.WEBSITE_NAME %></h4>
+        </section>
+    </div>
+<% } else if (language === "de") { %>    
+    <div style="font-family: Helvetica,Arial,sans-serif; min-width: 1000px; overflow:auto; padding: 20px 0;">
+        <section class="begin" style="text-align: center; color: <%= process.env.WEBSITE_COLOR %>; margin-bottom: 20px;">
+            <img src="<%= process.env.BASE_API_URL %>/assets/images/stores/UbuyBlues_Logo_merged_Purple.webp" alt="<%= process.env.WEBSITE_NAME %> Image"
+                style="width: 100px; height: 100px;">
+        </section>
+        <section class="content"
+            style="width: 80%; border: 1px solid <%= process.env.WEBSITE_COLOR %>; margin: auto; padding: 20px; line-height: 2;">
+            <h2 style="text-align: center;">
+                Akzeptieren Sie die Geschäftserweiterungsanfrage bei <%= process.env.WEBSITE_NAME %>
+            </h2>
+            <h3>Sehr geehrte/r <span style="font-weight: bold; color: <%= process.env.WEBSITE_COLOR %>">Händler</span>,</h3>
+            <p>Wir freuen uns, Ihnen mitteilen zu können, dass Ihre Anfrage zur Eröffnung eines Händlerkontos auf unserer Website genehmigt wurde .</p>
+            <h4>Link zum Admin-Dashboard-Login: <a href="<%= process.env.WEBSITE_DASHBOARD_URL %>/login">Admin-Dashboard-Login</a></h4>
+            <h4>Ihre Kontonummer: <%= adminId %></h4>
+            <h4>Ihre Geschäft-ID: <%= storeId %></h4>
+            <h4>Ihr Kontopasswort: <%= password %></h4>
+            <p>Wir freuen uns darauf, mit Ihnen zusammenzuarbeiten, und hoffen, dass Ihre Erfahrung mit uns außergewöhnlich und erfolgreich sein wird.</p>
+            <p>Vielen Dank, dass Sie sich uns angeschlossen haben, und wir wünschen Ihnen alles Gute.</p>
+            <h4>Mit freundlichen Grüßen,</h4>
+            <h4 style="line-height: 0; color: <%= process.env.WEBSITE_COLOR %>;">Das <%= process.env.WEBSITE_NAME %>-Team</h4>
+        </section>
+    </div>
+<% } else { %>
+    <div style="font-family: Helvetica,Arial,sans-serif; min-width: 1000px; overflow:auto; padding: 20px 0;">
+        <section class="begin" style="text-align: center; color: <%= process.env.WEBSITE_COLOR %>; margin-bottom: 20px;">
+            <img src="<%= process.env.BASE_API_URL %>/assets/images/stores/UbuyBlues_Logo_merged_Purple.webp" alt="<%= process.env.WEBSITE_NAME %> Image"
+                style="width: 100px; height: 100px;">
+        </section>
+        <section class="content"
+            style="width: 80%; border: 1px solid <%= process.env.WEBSITE_COLOR %>; margin: auto; padding: 20px; line-height: 2;">
+            <h2 style="text-align: center;">
+                <%= process.env.WEBSITE_NAME %>'de Mağaza Ekleme Talebini Kabul Et
+            </h2>
+            <h3>Sayın <span style="font-weight: bold; color: <%= process.env.WEBSITE_COLOR %>">Satıcı</span>,</h3>
+            <p>Web sitemizde satıcı hesabı açma talebinizin onaylandığını bildirmekten memnuniyet duyuyoruz .</p>
+            <h4>Yönetici Panosu Giriş Bağlantısı: <a href="<%= process.env.WEBSITE_DASHBOARD_URL %>/login">Yönetici Panosu Girişi</a></h4>
+            <h4>Hesap Kimliğiniz: <%= adminId %></h4>
+            <h4>Mağaza Kimliğiniz: <%= storeId %></h4>
+            <h4>Hesap Şifreniz: <%= password %></h4>
+            <p>Sizinle işbirliği yapmayı dört gözle bekliyoruz ve umuyoruz ki bizimle yaşayacağınız deneyim olağanüstü ve başarılı olacak.</p>
+            <p>Bize katıldığınız için teşekkür ederiz ve size en iyisini dileriz.</p>
+            <h4>Saygılarımla,</h4>
+            <h4 style="line-height: 0; color: <%= process.env.WEBSITE_COLOR %>;"><%= process.env.WEBSITE_NAME %> Ekibi</h4>
+        </section>
+    </div>
+<% } %>

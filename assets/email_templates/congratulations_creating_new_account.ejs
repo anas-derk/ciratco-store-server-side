@@ -1,0 +1,115 @@
+<% if (language === "en") { %>
+    <div style="font-family: Helvetica,Arial,sans-serif; min-width: 1000px; overflow:auto; padding: 20px 0;">
+        <section class="begin" style="text-align: center; color: <%= process.env.WEBSITE_COLOR %>; margin-bottom: 20px;">
+            <img src="<%= process.env.BASE_API_URL %>/assets/images/stores/UbuyBlues_Logo_merged_Purple.webp" alt="<%= process.env.WEBSITE_NAME %> Image"
+                style="width: 100px; height: 100px;">
+        </section>
+        <section class="content"
+            style="width: 80%; border: 1px solid <%= process.env.WEBSITE_COLOR %>; margin: auto; padding: 20px; line-height: 2;">
+            <h2 style="text-align: center;">Welcome Message</h2>
+            <p>
+                welcome to you in the <%= process.env.WEBSITE_NAME %> website !
+            </p>
+            <p>
+                We are delighted to have you join us and would like to welcome you to our online store community .
+            </p>
+            <p>
+                As a new subscriber, you will have the opportunity to explore a wide variety of products at excellent prices
+            </p>
+            <p>
+                We also invite you to take advantage of the exclusive offers and discounts available on our website. Don't
+                miss the opportunity to browse our products and explore everything we have to offer .
+            </p>
+            <p>
+                Thank you for trusting us, and we look forward to serving you always .
+            </p>
+            <h4>Best regards,</h4>
+            <h4 style="line-height: 0; color: <%= process.env.WEBSITE_COLOR %>;">The <%= process.env.WEBSITE_NAME %> Team</h4>
+        </section>
+    </div>
+<% } else if (language === "ar") { %>
+    <div style="font-family: Helvetica,Arial,sans-serif; min-width: 1000px; overflow:auto; padding: 20px 0; direction: rtl;">
+        <section class="begin" style="text-align: center; color: <%= process.env.WEBSITE_COLOR %>; margin-bottom: 20px;">
+            <img src="<%= process.env.BASE_API_URL %>/assets/images/stores/UbuyBlues_Logo_merged_Purple.webp" alt="<%= process.env.WEBSITE_NAME %> Image"
+                style="width: 100px; height: 100px;">
+        </section>
+        <section class="content"
+            style="width: 80%; border: 1px solid <%= process.env.WEBSITE_COLOR %>; margin: auto; padding: 20px; line-height: 2;"
+        >
+            <h2 style="text-align: center;">رسالة ترحيب</h2>
+            <p>
+                مرحباً بك في موقع <%= process.env.WEBSITE_NAME %>
+            </p>
+            <p>
+                نحن سعداء بانضمامك إلينا، ونود أن نرحب بك معنا في مجتمع متجرنا الإلكتروني .</p>
+            </p>
+            <p>
+                كمشترك جديد، ستكون لديك فرصة لاستكشاف مجموعة متنوعة من المنتجات المتنوعة وبأسعار ممتازة .
+            </p>
+            <p>
+                كما ندعوك للاستفادة من العروض الحصرية والتخفيضات التي ستحصل عليها  في موقعنا. لا تفوت الفرصة لتصفح منتجاتنا واستكشاف كل ما نقدمه
+            </p>
+            <p>
+                شكرا لثقتك فينا، ونتطلع إلى خدمتك دائما .
+            </p>
+            <h4>أطيب التحيات,</h4>
+            <h4 style="line-height: 0; color: <%= process.env.WEBSITE_COLOR %>;">فريق عمل <%= process.env.WEBSITE_NAME %></h4> 
+        </section>
+    </div>
+<% } else if (language === "de") { %>
+    <div style="font-family: Helvetica,Arial,sans-serif; min-width: 1000px; overflow:auto; padding: 20px 0;">
+        <section class="begin" style="text-align: center; color: <%= process.env.WEBSITE_COLOR %>; margin-bottom: 20px;">
+            <img src="<%= process.env.BASE_API_URL %>/assets/images/stores/UbuyBlues_Logo_merged_Purple.webp" alt="<%= process.env.WEBSITE_NAME %> Image"
+                style="width: 100px; height: 100px;">
+        </section>
+        <section class="content"
+            style="width: 80%; border: 1px solid <%= process.env.WEBSITE_COLOR %>; margin: auto; padding: 20px; line-height: 2;">
+            <h2 style="text-align: center;">Welcome Message</h2>
+            <p>
+                Willkommen auf der <%= process.env.WEBSITE_NAME %>-Website !
+            </p>
+            <p>
+                Wir freuen uns, dass Sie sich uns angeschlossen haben, und möchten Sie in unserer Online-Shop-Gemeinschaft willkommen heißen .
+            </p>
+            <p>
+                Als neuer Abonnent haben Sie die Möglichkeit, eine große Auswahl an Produkten zu hervorragenden Preisen zu erkunden .
+            </p>
+            <p>
+                Wir laden Sie auch ein, die exklusiven Angebote und Rabatte auf unserer Website zu nutzen. Verpassen Sie nicht die Gelegenheit, unsere Produkte zu durchstöbern und alles zu entdecken, was wir zu bieten haben .
+            </p>
+            <p>
+                Vielen Dank für Ihr Vertrauen, und wir freuen uns darauf, Ihnen stets zu Diensten zu sein .
+            </p>
+            <h4>Mit freundlichen Grüßen,</h4>
+            <h4 style="line-height: 0; color: <%= process.env.WEBSITE_COLOR %>;">Das <%= process.env.WEBSITE_NAME %>-Team</h4>
+        </section>
+    </div>
+<% } else { %>
+    <div style="font-family: Helvetica,Arial,sans-serif; min-width: 1000px; overflow:auto; padding: 20px 0;">
+        <section class="begin" style="text-align: center; color: <%= process.env.WEBSITE_COLOR %>; margin-bottom: 20px;">
+            <img src="<%= process.env.BASE_API_URL %>/assets/images/stores/UbuyBlues_Logo_merged_Purple.webp" alt="<%= process.env.WEBSITE_NAME %> Image"
+                style="width: 100px; height: 100px;">
+        </section>
+        <section class="content"
+            style="width: 80%; border: 1px solid <%= process.env.WEBSITE_COLOR %>; margin: auto; padding: 20px; line-height: 2;">
+            <h2 style="text-align: center;">Welcome Message</h2>
+            <p>
+                <%= process.env.WEBSITE_NAME %> web sitesine hoş geldiniz !
+            </p>
+            <p>
+                Aramıza katıldığınız için mutluyuz ve sizi online mağazamızın topluluğunda görmekten memnuniyet duyarız .
+            </p>
+            <p>
+                Yeni bir abone olarak, mükemmel fiyatlarla geniş bir ürün yelpazesini keşfetme fırsatına sahip olacaksınız .
+            </p>
+            <p>
+                Ayrıca, web sitemizde bulunan özel tekliflerden ve indirimlerden yararlanmanızı da davet ediyoruz. Ürünlerimizi gözden geçirme ve sunduğumuz her şeyi keşfetme fırsatını kaçırmayın .
+            </p>
+            <p>
+                Bize güvendiğiniz için teşekkür ederiz ve size her zaman hizmet vermeyi dört gözle bekliyoruz .
+            </p>
+            <h4>Saygılarımla,</h4>
+            <h4 style="line-height: 0; color: <%= process.env.WEBSITE_COLOR %>;"><%= process.env.WEBSITE_NAME %> Ekibi</h4>
+        </section>
+    </div>
+<% } %>

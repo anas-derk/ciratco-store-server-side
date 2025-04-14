@@ -1,0 +1,65 @@
+<% if (language === "en") { %>
+    <div style="font-family: Helvetica,Arial,sans-serif; min-width: 1000px; overflow:auto; padding: 20px 0;">
+        <section class="begin" style="text-align: center; color: <%= process.env.WEBSITE_COLOR %>; margin-bottom: 20px;">
+            <img src="<%= process.env.BASE_API_URL %>/assets/images/stores/UbuyBlues_Logo_merged_Purple.webp" alt="<%= process.env.WEBSITE_NAME %> Image"
+                style="width: 100px; height: 100px;">
+        </section>
+        <section class="content"
+            style="width: 80%; border: 1px solid <%= process.env.WEBSITE_COLOR %>; margin: auto; padding: 20px; line-height: 2;">
+            <h2 style="text-align: center;">Reject The Store Addition Request At <%= process.env.WEBSITE_NAME %></h2>
+            <h3>Dear <span style="font-weight: bold; color: <%= process.env.WEBSITE_COLOR %>">Merchant</span>,</h3>
+            <p>We regret to inform you that your merchant account application has not been approved at this time .</p>
+            <p>We appreciate your interest in joining our site and wish you success in the future .</p>
+            <h4>Best regards,</h4>
+            <h4 style="line-height: 0; color: <%= process.env.WEBSITE_COLOR %>;">The <%= process.env.WEBSITE_NAME %> Team</h4>
+        </section>
+    </div>
+<% } else if (language === "ar") { %>
+    <div style="font-family: Helvetica,Arial,sans-serif; min-width: 1000px; overflow:auto; padding: 20px 0; direction: rtl;">
+        <section class="begin" style="text-align: center; color: <%= process.env.WEBSITE_COLOR %>; margin-bottom: 20px;">
+            <img src="<%= process.env.BASE_API_URL %>/assets/images/stores/UbuyBlues_Logo_merged_Purple.webp" alt="<%= process.env.WEBSITE_NAME %> Image"
+                style="width: 100px; height: 100px;">
+        </section>
+        <section class="content"
+            style="width: 80%; border: 1px solid <%= process.env.WEBSITE_COLOR %>; margin: auto; padding: 20px; line-height: 2;">
+            <h2 style="text-align: center;">رفض طلب إضافة متجر لدى <%= process.env.WEBSITE_NAME %></h2>
+            <h3>عزيزي <span style="font-weight: bold; color: <%= process.env.WEBSITE_COLOR %>">التاجر</span>,</h3>
+            <p>نأسف أن نخبركم بأن طلب فتح حساب تاجر لم يتم الموافقة عليه حالياً .</p>
+            <p>نحن نقدر اهتمامكم بالانضمام إلى موقعنا ونتمنى لكم النجاح في المستقبل .</p>
+            <h4>أطيب التحيات,</h4>
+            <h4 style="line-height: 0; color: <%= process.env.WEBSITE_COLOR %>;">فريق عمل <%= process.env.WEBSITE_NAME %></h4>
+        </section>
+    </div>
+<% } else if (language === "de") { %>
+    <div style="font-family: Helvetica,Arial,sans-serif; min-width: 1000px; overflow:auto; padding: 20px 0; direction: rtl;">
+        <section class="begin" style="text-align: center; color: <%= process.env.WEBSITE_COLOR %>; margin-bottom: 20px;">
+            <img src="<%= process.env.BASE_API_URL %>/assets/images/stores/UbuyBlues_Logo_merged_Purple.webp" alt="<%= process.env.WEBSITE_NAME %> Image"
+                style="width: 100px; height: 100px;">
+        </section>
+        <section class="content"
+            style="width: 80%; border: 1px solid <%= process.env.WEBSITE_COLOR %>; margin: auto; padding: 20px; line-height: 2;">
+            <h2 style="text-align: center;">Lehnen Sie die Anfrage zur Hinzufügung des Stores bei <%= process.env.WEBSITE_NAME %> ab</h2>
+            <h3>Sehr geehrte/r <span style="font-weight: bold; color: <%= process.env.WEBSITE_COLOR %>">Händler</span>,</h3>
+            <p>Wir bedauern, Ihnen mitteilen zu müssen, dass Ihr Antrag auf ein Händlerkonto zu diesem Zeitpunkt nicht genehmigt wurde .</p>
+            <p>Wir schätzen Ihr Interesse, unserer Seite beizutreten, und wünschen Ihnen viel Erfolg in der Zukunft .</p>
+            <h4>Mit freundlichen Grüßen,</h4>
+            <h4 style="line-height: 0; color: <%= process.env.WEBSITE_COLOR %>;">Das <%= process.env.WEBSITE_NAME %>-Team</h4>
+        </section>
+    </div>
+    <% } else { %>
+        <div style="font-family: Helvetica,Arial,sans-serif; min-width: 1000px; overflow:auto; padding: 20px 0; direction: rtl;">
+            <section class="begin" style="text-align: center; color: <%= process.env.WEBSITE_COLOR %>; margin-bottom: 20px;">
+                <img src="<%= process.env.BASE_API_URL %>/assets/images/stores/UbuyBlues_Logo_merged_Purple.webp" alt="<%= process.env.WEBSITE_NAME %> Image"
+                style="width: 100px; height: 100px;">
+            </section>
+            <section class="content"
+            style="width: 80%; border: 1px solid <%= process.env.WEBSITE_COLOR %>; margin: auto; padding: 20px; line-height: 2;">
+            <h2 style="text-align: center;"><%= process.env.WEBSITE_NAME %>'ta Mağaza Ekleme Talebini Reddet</h2>
+            <h3>Sayın <span style="font-weight: bold; color: <%= process.env.WEBSITE_COLOR %>">Satıcı</span>,</h3>
+            <p>Üzülerek bildiririz ki, satıcı hesabı başvurunuz şu anda onaylanmamıştır .</p>
+            <p>Sitemize katılma ilginizi takdir ediyor ve gelecekte başarılar diliyoruz .</p>
+            <h4>Saygılarımla,</h4>
+            <h4 style="line-height: 0; color: <%= process.env.WEBSITE_COLOR %>;"><%= process.env.WEBSITE_NAME %> Ekibi</h4>
+        </section>
+    </div>
+<% } %>

@@ -1,0 +1,30 @@
+<div style="font-family: Helvetica,Arial,sans-serif; min-width: 1000px; overflow:auto; padding: 20px 0; direction: rtl;">
+    <section class="begin" style="text-align: center; color: <%= process.env.WEBSITE_COLOR %>; margin-bottom: 20px;">
+        <img src="<%= process.env.BASE_API_URL %>/assets/images/stores/UbuyBlues_Logo_merged_Purple.webp" alt="<%= process.env.WEBSITE_NAME %> Image"
+            style="width: 100px; height: 100px;">
+    </section>
+    <section class="content"
+        style="width: 80%; border: 1px solid <%= process.env.WEBSITE_COLOR %>; margin: auto; padding: 20px; line-height: 2;">
+        <h2 style="text-align: center;">
+            وصول طلب طلب حجز متجر إلكتروني لدى <%= process.env.WEBSITE_NAME %>
+        </h2>
+        <h3>مرحباً</h3>
+        <p>أرغب في حجز متجر إلكتروني من خلال موقعكم الإلكتروني. إليكم التفاصيل المتعلقة بالحجز :</p>
+        <ul>
+            <li>اسم المتجر: <%= name %></li>
+            <li>اسم مالك المتجر الأول: <%= ownerFirstName %></li>
+            <li>اسم مالك المتجر الثاني: <%= ownerLastName %></li>
+            <li>البريد الالكتروني لمالك المتجر : <%= ownerEmail %></li>
+            <li>نوع المنتجات : <%= productsType %></li>
+            <li>وصف المنتجات : <%= productsDescription %></li>
+            <li>تاريخ إنشاء الطلب : <%= creatingOrderDate %></li>
+        </ul>
+        <p>كما أود الاستفسار عن بعض المعلومات الإضافية :</p>
+        <ul>
+            <li>هل يوجد رسوم للإعداد أو التشغيل؟</li>
+            <li>ما هي طرق الدفع المتاحة؟</li>
+        </ul>
+        <p>شكرًا لمساعدتكم، وأتطلع لردكم السريع.</p>
+        <p>مع أطيب التحيات،</p>
+    </section>
+</div>

@@ -1,0 +1,94 @@
+<% if (language === "en") { %>
+    <div style="font-family: Helvetica,Arial,sans-serif; min-width: 1000px; overflow:auto; padding: 20px 0;">
+        <section class="begin" style="text-align: center; color: <%= process.env.WEBSITE_COLOR %>; margin-bottom: 20px;">
+            <img src="<%= process.env.BASE_API_URL %>/assets/images/stores/UbuyBlues_Logo_merged_Purple.webp" alt="<%= process.env.WEBSITE_NAME %> Image"
+                style="width: 100px; height: 100px;">
+        </section>
+        <section class="content"
+            style="width: 80%; border: 1px solid <%= process.env.WEBSITE_COLOR %>; margin: auto; padding: 20px; line-height: 2;">
+            <h2 style="text-align: center;">Confirmation of store addition request at <%= process.env.WEBSITE_NAME %></h2>
+            <p>
+                We are pleased to inform you that your request to add your store to our website has been accepted.
+            </p>
+            <p>
+                We will start processing and reviewing your request as soon as possible.
+            </p>
+            </p>
+            <p>
+                Thank you for choosing to work with us.
+            </p>
+            <h4>Best regards,</h4>
+            <h4 style="line-height: 0; color: <%= process.env.WEBSITE_COLOR %>;">The <%= process.env.WEBSITE_NAME %> Team</h4>
+        </section>
+    </div>
+<% } else if (language === "ar") { %>
+    <div style="font-family: Helvetica,Arial,sans-serif; min-width: 1000px; overflow:auto; padding: 20px 0; direction: rtl;">
+        <section class="begin" style="text-align: center; color: <%= process.env.WEBSITE_COLOR %>; margin-bottom: 20px;">
+            <img src="<%= process.env.BASE_API_URL %>/assets/images/stores/UbuyBlues_Logo_merged_Purple.webp" alt="<%= process.env.WEBSITE_NAME %> Image"
+                style="width: 100px; height: 100px;">
+        </section>
+        <section class="content"
+            style="width: 80%; border: 1px solid <%= process.env.WEBSITE_COLOR %>; margin: auto; padding: 20px; line-height: 2;"
+        >
+            <h2 style="text-align: center;">تأكيد وصول طلب إضافة متجر لدى <%= process.env.WEBSITE_NAME %></h2>
+            <p>
+                نحن سعداء بالإعلام بقبول طلبكم لإضافة متجرك الخاص في موقعنا الإلكتروني .
+            </p>
+            <p>
+                سنقوم بالبدء في عملية المعالجة والتدقيق في طلبكم في أقرب وقت ممكن .
+            </p>
+            </p>
+            <p>
+                شكرًا لكم على اختياركم للتعامل معنا .
+            </p>
+            <h4>أطيب التحيات,</h4>
+            <h4 style="line-height: 0; color: <%= process.env.WEBSITE_COLOR %>;">فريق عمل <%= process.env.WEBSITE_NAME %></h4> 
+        </section>
+    </div>
+<% } else if (language === "de") { %>
+    <div style="font-family: Helvetica,Arial,sans-serif; min-width: 1000px; overflow:auto; padding: 20px 0;">
+        <section class="begin" style="text-align: center; color: <%= process.env.WEBSITE_COLOR %>; margin-bottom: 20px;">
+            <img src="<%= process.env.BASE_API_URL %>/assets/images/stores/UbuyBlues_Logo_merged_Purple.webp" alt="<%= process.env.WEBSITE_NAME %> Image"
+                style="width: 100px; height: 100px;">
+        </section>
+        <section class="content"
+            style="width: 80%; border: 1px solid <%= process.env.WEBSITE_COLOR %>; margin: auto; padding: 20px; line-height: 2;">
+            <h2 style="text-align: center;">Bestätigung der Anfrage zur Geschäftsergänzung bei <%= process.env.WEBSITE_NAME %></h2>
+            <p>
+                Wir freuen uns, Ihnen mitteilen zu können, dass Ihr Antrag zur Hinzufügung Ihres Geschäfts zu unserer Website akzeptiert wurde.
+            </p>
+            <p>
+                Wir werden so bald wie möglich mit der Bearbeitung und Überprüfung Ihrer Anfrage beginnen.
+            </p>
+            </p>
+            <p>
+                Vielen Dank, dass Sie sich für eine Zusammenarbeit mit uns entschieden haben.
+            </p>
+            <h4>Mit freundlichen Grüßen,</h4>
+            <h4 style="line-height: 0; color: <%= process.env.WEBSITE_COLOR %>;">Das <%= process.env.WEBSITE_NAME %>-Team</h4>
+        </section>
+    </div>
+<% } else { %>
+    <div style="font-family: Helvetica,Arial,sans-serif; min-width: 1000px; overflow:auto; padding: 20px 0;">
+        <section class="begin" style="text-align: center; color: <%= process.env.WEBSITE_COLOR %>; margin-bottom: 20px;">
+            <img src="<%= process.env.BASE_API_URL %>/assets/images/stores/UbuyBlues_Logo_merged_Purple.webp" alt="<%= process.env.WEBSITE_NAME %> Image"
+                style="width: 100px; height: 100px;">
+        </section>
+        <section class="content"
+            style="width: 80%; border: 1px solid <%= process.env.WEBSITE_COLOR %>; margin: auto; padding: 20px; line-height: 2;">
+            <h2 style="text-align: center;"><%= process.env.WEBSITE_NAME %>'ta mağaza ekleme talebinin onayı</h2>
+            <p>
+                Mağazanızı web sitemize ekleme talebinizin kabul edildiğini bildirmekten mutluluk duyarız.
+            </p>
+            <p>
+                Talebinizi en kısa sürede işlemeye ve incelemeye başlayacağız.
+            </p>
+            </p>
+            <p>
+                Bizimle çalışmayı seçtiğiniz için teşekkür ederiz.
+            </p>
+            <h4>Saygılarımla,</h4>
+            <h4 style="line-height: 0; color: <%= process.env.WEBSITE_COLOR %>;"><%= process.env.WEBSITE_NAME %> Ekibi</h4>
+        </section>
+    </div>
+<% } %>
