@@ -119,7 +119,7 @@ const storeInfo = {
         de: process.env.WEBSITE_NAME,
         tr: process.env.WEBSITE_NAME
     },
-    imagePath: "assets/images/stores/Logo.jpg",
+    imagePath: "assets/images/stores/Logo.webp",
     ownerFirstName: "Soliman",
     ownerLastName: "Asfour",
     ownerEmail: process.env.MAIN_ADMIN_EMAIL,
