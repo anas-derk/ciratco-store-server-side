@@ -119,7 +119,7 @@ const storeInfo = {
         de: "Ubuyblues",
         tr: "Ubuyblues"
     },
-    imagePath: "assets/images/stores/UbuyBlues_Logo_merged_Purple.jpg",
+    imagePath: "assets/images/stores/Logo.jpg",
     ownerFirstName: "Soliman",
     ownerLastName: "Asfour",
     ownerEmail: process.env.MAIN_ADMIN_EMAIL,
