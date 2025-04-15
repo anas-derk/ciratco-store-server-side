@@ -114,10 +114,10 @@ const storeModel = mongoose.model("store", storeSchema);
 
 const storeInfo = {
     name: {
-        ar: "Ubuyblues",
-        en: "Ubuyblues",
-        de: "Ubuyblues",
-        tr: "Ubuyblues"
+        ar: process.env.WEBSITE_NAME,
+        en: process.env.WEBSITE_NAME,
+        de: process.env.WEBSITE_NAME,
+        tr: process.env.WEBSITE_NAME
     },
     imagePath: "assets/images/stores/Logo.jpg",
     ownerFirstName: "Soliman",
@@ -131,10 +131,10 @@ const storeInfo = {
         tr: "Multiple"
     },
     productsDescription: {
-        ar: "Welcome To Ubuyblues Store",
-        en: "Welcome To Ubuyblues Store",
-        de: "Welcome To Ubuyblues Store",
-        tr: "Welcome To Ubuyblues Store"
+        ar: `Welcome To ${process.env.WEBSITE_NAME} Store`,
+        en: `Welcome To ${process.env.WEBSITE_NAME} Store`,
+        de: `Welcome To ${process.env.WEBSITE_NAME} Store`,
+        tr: `Welcome To ${process.env.WEBSITE_NAME} Store`
     },
     status: "approving",
     isMainStore: true,
