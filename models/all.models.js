@@ -553,10 +553,8 @@ const orderSchema = new mongoose.Schema({
         type: String,
         required: true,
         enum: [
-            "tap",
-            "tabby",
-            "binance",
-            "paypal"
+            "paypal",
+            "stripe"
         ],
     },
     status: {

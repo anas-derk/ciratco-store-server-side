@@ -118,162 +118,36 @@ async function postNewPaymentOrder(req, res) {
             return res.json(result);
         }
         else {
-            if (orderData.paymentGateway === "tap") {
-                result = (await post(`${process.env.TAP_PAYMENT_GATEWAY_BASE_API_URL}/charges`, {
-                    amount: result.data.orderAmount,
-                    currency: "USD",
-                    receipt: {
-                        email: true,
-                        sms: false
-                    },
-                    customer: {
-                        first_name: orderData.billingAddress.firstName,
-                        last_name: orderData.billingAddress.lastName,
-                        email: orderData.billingAddress.email
-                    },
-                    source: {
-                        id: "src_all"
-                    },
-                    reference: {
-                        transaction: result.data.orderId,
-                        order: result.data.orderNumber,
-                    },
-                    redirect: {
-                        url: `${process.env.NODE_ENV === "test" ? "http://localhost:3000" : "https://ubuyblues.com"}/confirmation/${result.data._id}?country=${req.query.country}`
-                    },
-                    post: {
-                        url: `https://api.ubuyblues.com/orders/handle-checkout-complete/${result.data._id}`
-                    }
+            if (orderData.paymentGateway === "paypal") {
+                result = (await post(`${process.env.PAYPAL_BASE_API_URL}/v1/oauth2/token`, {
+                    "grant_type": "client_credentials"
                 }, {
                     headers: {
-                        Authorization: `Bearer ${process.env.TAP_PAYMENT_GATEWAY_SECRET_KEY}`
+                        "Content-Type": "application/x-www-form-urlencoded",
+                        "Authorization": `Basic ${Buffer.from(`${process.env.PAYPAL_API_USER_NAME}:${process.env.PAYPAL_API_PASSWORD}`).toString("base64")}`
                     }
                 })).data;
-                return res.json(getResponseObject(getSuitableTranslations("Creating New Payment Order By Tap Process Has Been Successfully !!", language), false, result));
-            } else if (orderData.paymentGateway === "tabby") {
-                result = (await post(`${process.env.TABBY_PAYMENT_GATEWAY_BASE_API_URL}/api/v2/checkout`, {
-                    payment: {
-                        amount: String((result.data.orderAmount * 0.31).toFixed(3)),
-                        currency: "KWD",
-                        buyer: {
-                            phone: "+96590000001",
-                            email: result.data.billingAddress.email,
-                            name: result.data.billingAddress.firstName + " " + result.data.billingAddress.lastName,
-                        },
-                        shipping_address: {
-                            city: result.data.shippingAddress.city,
-                            address: result.data.shippingAddress.streetAddress,
-                            zip: String(result.data.shippingAddress.postalCode)
-                        },
-                        order: {
-                            tax_amount: "0.00",
-                            shipping_amount: String(result.data.shippingCost.forLocalProducts + result.data.shippingCost.forInternationalProducts),
-                            discount_amount: String(result.data.totalDiscount),
-                            reference_id: String(result.data.orderNumber),
-                            items: result.data.products.map(product => (
-                                {
-                                    title: product.name,
-                                    quantity: product.quantity,
-                                    unit_price: String(product.unitPrice),
-                                    discount_amount: String(product.discount),
-                                    // reference_id: product.productId,
-                                    image_url: `https://api.ubuyblues.com/${product.imagePath}`,
-                                    product_url: `https://ubuyblues.com/product-details/${product.productId}`,
-                                    category: "TOYS"
-                                }
-                            ))
-                        },
-                        buyer_history: {
-                            registered_since: "2019-08-24T14:15:22Z",
-                            loyalty_level: 1,
-                        },
-                        order_history: [
-                            {
-                                purchased_at: result.data.addedDate,
-                                amount: String((result.data.orderAmount * 0.31).toFixed(3)),
-                                status: "new",
-                                buyer: {
-                                    phone: "+96590000001",
-                                    email: result.data.billingAddress.email,
-                                    name: result.data.billingAddress.firstName + " " + result.data.billingAddress.lastName,
-                                },
-                                shipping_address: {
-                                    city: result.data.shippingAddress.city,
-                                    address: result.data.shippingAddress.streetAddress,
-                                    zip: String(result.data.shippingAddress.postalCode)
-                                },
-                                items: result.data.products.map(product => (
-                                    {
-                                        title: product.name,
-                                        quantity: product.quantity,
-                                        unit_price: String(product.unitPrice),
-                                        discount_amount: String(product.discount),
-                                        // reference_id: product.productId,
-                                        image_url: `https://api.ubuyblues.com/${product.imagePath}`,
-                                        product_url: `https://ubuyblues.com/product-details/${product.productId}`,
-                                        category: "TOYS"
-                                    }
-                                ))
+                result = (await post(`${process.env.PAYPAL_BASE_API_URL}/v2/checkout/orders`, {
+                    "intent": "CAPTURE",
+                    "purchase_units": [
+                        {
+                            "amount": {
+                                "currency_code": "USD",
+                                "value": result.data.orderAmount
                             }
-                        ],
-                        meta: {
-                            order_id: result.data._id,
                         }
-                    },
-                    lang: "ar",
-                    merchant_code: "UBUYBLUESkwt",
-                    merchant_urls: {
-                        success: `https://ubuyblues.com/confirmation/${result.data._id}`,
-                        cancel: `https://ubuyblues.com/checkout?storeId=${result.data.storeId}`,
-                        failure: `https://ubuyblues.com/checkout?storeId=${result.data.storeId}`
+                    ],
+                    "application_context": {
+                        "return_url": `${process.env.NODE_ENV === "test" ? `http://localhost:3000/confirmation/${result.data._id}?country=${req.query.country}` : process.env.WEBSITE_URL}/confirmation/${result.data._id}?country=${req.query.country}`,
+                        "cancel_url": `${process.env.NODE_ENV === "test" ? `http://localhost:3000/checkout/${result.data._id}?country=${req.query.country}` : process.env.WEBSITE_URL}/checkout/${result.data._id}?country=${req.query.country}`
                     }
                 }, {
                     headers: {
-                        Authorization: `Bearer ${process.env.TAPPY_PUBLIC_API_KEY}`
+                        Authorization: `Bearer ${result.access_token}`
                     }
                 })).data;
-                return res.json(result.status === "created" ?
-                    getResponseObject(getSuitableTranslations("Creating New Payment Order By Tabby Process Has Been Successfully !!", language), false, {
-                        checkoutURL: result.configuration.available_products.installments[0].web_url
-                    }) :
-                    getResponseObject(getSuitableTranslations("Sorry, Can't Creating New Payment Order By Tabby Because Exceeding The Payment Limit !!", language), true, {})
-                );
-            } else {
-                const timestamp = Date.now();
-                const nonce = "VeTfR5mdAKjbeErxBXTl20JayTiCz4sb";
-                const data = {
-                    env: {
-                        terminalType: "WEB"
-                    },
-                    merchantTradeNo: result.data._id,
-                    currency: "USDT",
-                    orderAmount: result.data.orderAmount,
-                    description: "Pay In Ubuyblues",
-                    goodsDetails: result.data.products.map((product => ({
-                        goodsType: "01",
-                        goodsCategory: "D000",
-                        referenceGoodsId: product.productId,
-                        goodsName: product.name,
-                    }))),
-                    returnUrl: `https://ubuyblues.com/confirmation/${result.data._id}`,
-                    cancelUrl: `https://ubuyblues.com/checkout?storeId=${result.data.storeId}`,
-                    webhookUrl: `https://api.ubuyblues.com/orders/handle-change-binance-payment-status/${result.data._id}`
-                }
-                const signaturePayload = `${timestamp}\n${nonce}\n${JSON.stringify(data)}\n`;
-                const signature = createHmac("sha512", process.env.BINANCE_API_SECRET_KEY, {
-                    encoding: "utf8"
-                }).update(signaturePayload).digest("hex").toUpperCase();
-                result = (await post(`${process.env.BINANCE_BASE_API_URL}/binancepay/openapi/v3/order`, data, {
-                    headers: {
-                        "Content-Type": "application/json",
-                        "BinancePay-Timestamp": timestamp,
-                        "BinancePay-Nonce": nonce,
-                        "BinancePay-Certificate-SN": process.env.BINANCE_API_KEY,
-                        "BinancePay-Signature": signature
-                    }
-                })).data;
-                res.json(getResponseObject(getSuitableTranslations("Creating New Payment Order By Binance Process Has Been Successfully !!", language), false, {
-                    checkoutURL: result.data.checkoutUrl
+                return res.json(getResponseObject(getSuitableTranslations("Creating New Payment Order By Tap Process Has Been Successfully !!", language), false, {
+                    paymentURL: result.links[1].href
                 }));
             }
         }
@@ -290,29 +164,6 @@ async function postCheckoutComplete(req, res) {
         if (!result.error) {
             await sendReceiveOrderEmail(result.data.billingAddress.email, result.data, "ar");
         }
-    }
-    catch (err) {
-        res.status(500).json(getResponseObject(getSuitableTranslations("Internal Server Error !!", req.query.language), true, {}));
-    }
-}
-
-async function postChangeBinancePaymentStatus(req, res) {
-    try {
-        if (req.body.bizStatus === "PAY_SUCCESS") {
-            res.json({
-                returnCode: "SUCCESS",
-                returnMessage: null
-            });
-            const result = await ordersManagmentFunctions.changeCheckoutStatusToSuccessfull(req.params.orderId, req.query.language);
-            if (!result.error) {
-                await sendReceiveOrderEmail(result.data.billingAddress.email, result.data, "ar");
-            }
-            return;
-        }
-        res.json({
-            returnCode: "SUCCESS",
-            returnMessage: null
-        });
     }
     catch (err) {
         res.status(500).json(getResponseObject(getSuitableTranslations("Internal Server Error !!", req.query.language), true, {}));
@@ -396,7 +247,6 @@ module.exports = {
     postNewOrder,
     postNewPaymentOrder,
     postCheckoutComplete,
-    postChangeBinancePaymentStatus,
     putOrder,
     putOrderProduct,
     deleteOrder,

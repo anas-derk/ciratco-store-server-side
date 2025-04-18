@@ -326,15 +326,6 @@ ordersRouter.post("/handle-checkout-complete/:orderId",
     ordersController.postCheckoutComplete
 );
 
-ordersRouter.post("/handle-change-binance-payment-status/:orderId",
-    (req, res, next) => {
-        validateIsExistValueForFieldsAndDataTypes([
-            { fieldName: "Order Id", fieldValue: req.params.orderId, dataTypes: ["ObjectId"], isRequiredValue: true },
-        ], res, next);
-    },
-    ordersController.postChangeBinancePaymentStatus
-);
-
 ordersRouter.post("/update-order/:orderId",
     validateJWT,
     (req, res, next) => {
