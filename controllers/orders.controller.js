@@ -173,11 +173,13 @@ async function postCheckoutComplete(req, res) {
 
 async function postPaypalCheckoutComplete(req, res) {
     try {
-        const result = await ordersManagmentFunctions.changeCheckoutStatusToSuccessfull(req.params.orderId, req.query.language);
-        res.json(result);
-        if (!result.error) {
-            await sendReceiveOrderEmail(result.data.billingAddress.email, result.data, "ar");
-        }
+        console.log(req.body);
+        res.json("yes");
+        // const result = await ordersManagmentFunctions.changeCheckoutStatusToSuccessfull(req.params.orderId, req.query.language);
+        // res.json(result);
+        // if (!result.error) {
+        //     await sendReceiveOrderEmail(result.data.billingAddress.email, result.data, "ar");
+        // }
     }
     catch (err) {
         res.status(500).json(getResponseObject(getSuitableTranslations("Internal Server Error !!", req.query.language), true, {}));
