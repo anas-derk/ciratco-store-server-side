@@ -326,6 +326,8 @@ ordersRouter.post("/handle-checkout-complete/:orderId",
     ordersController.postCheckoutComplete
 );
 
+ordersRouter.post("/handle-paypal-checkout-complete", ordersController.postPaypalCheckoutComplete);
+
 ordersRouter.post("/update-order/:orderId",
     validateJWT,
     (req, res, next) => {

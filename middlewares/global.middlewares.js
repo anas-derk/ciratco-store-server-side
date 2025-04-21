@@ -184,7 +184,7 @@ function validateOrderCreator(orderCreator, res, nextFunc) {
 }
 
 function validatePaymentGateway(paymentGate, res, nextFunc) {
-    if (!["tap", "tabby", "binance"].includes(paymentGate)) {
+    if (!["paypal", "stripe"].includes(paymentGate)) {
         res.status(400).json(getResponseObject("Please Send Valid Payment Gateway !!", true, {}));
         return;
     }

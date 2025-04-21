@@ -119,7 +119,7 @@ async function postNewPaymentOrder(req, res) {
         }
         else {
             if (orderData.paymentGateway === "paypal") {
-                result = (await post(`${process.env.PAYPAL_BASE_API_URL}/v1/oauth2/token`, {
+                let result1 = (await post(`${process.env.PAYPAL_BASE_API_URL}/v1/oauth2/token`, {
                     "grant_type": "client_credentials"
                 }, {
                     headers: {
@@ -127,7 +127,7 @@ async function postNewPaymentOrder(req, res) {
                         "Authorization": `Basic ${Buffer.from(`${process.env.PAYPAL_API_USER_NAME}:${process.env.PAYPAL_API_PASSWORD}`).toString("base64")}`
                     }
                 })).data;
-                result = (await post(`${process.env.PAYPAL_BASE_API_URL}/v2/checkout/orders`, {
+                result1 = (await post(`${process.env.PAYPAL_BASE_API_URL}/v2/checkout/orders`, {
                     "intent": "CAPTURE",
                     "purchase_units": [
                         {
@@ -143,11 +143,11 @@ async function postNewPaymentOrder(req, res) {
                     }
                 }, {
                     headers: {
-                        Authorization: `Bearer ${result.access_token}`
+                        Authorization: `Bearer ${result1.access_token}`
                     }
                 })).data;
                 return res.json(getResponseObject(getSuitableTranslations("Creating New Payment Order By Tap Process Has Been Successfully !!", language), false, {
-                    paymentURL: result.links[1].href
+                    paymentURL: result1.links[1].href
                 }));
             }
         }
@@ -158,6 +158,19 @@ async function postNewPaymentOrder(req, res) {
 }
 
 async function postCheckoutComplete(req, res) {
+    try {
+        const result = await ordersManagmentFunctions.changeCheckoutStatusToSuccessfull(req.params.orderId, req.query.language);
+        res.json(result);
+        if (!result.error) {
+            await sendReceiveOrderEmail(result.data.billingAddress.email, result.data, "ar");
+        }
+    }
+    catch (err) {
+        res.status(500).json(getResponseObject(getSuitableTranslations("Internal Server Error !!", req.query.language), true, {}));
+    }
+}
+
+async function postPaypalCheckoutComplete(req, res) {
     try {
         const result = await ordersManagmentFunctions.changeCheckoutStatusToSuccessfull(req.params.orderId, req.query.language);
         res.json(result);
@@ -247,6 +260,7 @@ module.exports = {
     postNewOrder,
     postNewPaymentOrder,
     postCheckoutComplete,
+    postPaypalCheckoutComplete,
     putOrder,
     putOrderProduct,
     deleteOrder,
