@@ -188,18 +188,19 @@ async function postPaypalCheckoutComplete(req, res) {
         const result = req.body;
         if (result?.event_type === "CHECKOUT.ORDER.APPROVED") {
             let result1 = await createPaypalToken();
-            result1 = (await post(`${process.env.PAYPAL_BASE_API_URL}/v2/checkout/orders/${result.resource.id}/capture`, {}, {
+            console.log(result1);
+            let result2 = (await post(`${process.env.PAYPAL_BASE_API_URL}/v2/checkout/orders/${result.resource.id}/capture`, {}, {
                 headers: {
                     Authorization: `Bearer ${result1.access_token}`
                 }
             })).data;
-            console.log(result1, result.purchase_units[0]);
-            if (result1.status === "COMPLETED") {
-                result1 = await ordersManagmentFunctions.changeCheckoutStatusToSuccessfull(result.purchase_units[0].custom_id, "en");
-                res.json(result1);
-                if (!result1.error) {
+            console.log(result2, result);
+            if (result2.status === "COMPLETED") {
+                result2 = await ordersManagmentFunctions.changeCheckoutStatusToSuccessfull(result.purchase_units[0].custom_id, "en");
+                res.json(result2);
+                if (!result2.error) {
                     try {
-                        await sendReceiveOrderEmail(result1.data.billingAddress.email, result1.data, "ar");
+                        await sendReceiveOrderEmail(result2.data.billingAddress.email, result2.data, "ar");
                         return;
                     }
                     catch (err) {
