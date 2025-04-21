@@ -4,8 +4,6 @@ const ordersManagmentFunctions = require("../models/orders.model");
 
 const { post } = require("axios");
 
-const { createHmac } = require("crypto");
-
 function getFiltersObject(filters) {
     let filtersObject = {};
     for (let objectKey in filters) {
@@ -103,6 +101,22 @@ async function postNewOrder(req, res) {
     }
 }
 
+async function createPaypalToken() {
+    try {
+        return (await post(`${process.env.PAYPAL_BASE_API_URL}/v1/oauth2/token`, {
+            "grant_type": "client_credentials"
+        }, {
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Authorization": `Basic ${Buffer.from(`${process.env.PAYPAL_API_USER_NAME}:${process.env.PAYPAL_API_PASSWORD}`).toString("base64")}`
+            }
+        })).data;
+    }
+    catch (err) {
+        throw err;
+    }
+}
+
 async function postNewPaymentOrder(req, res) {
     try {
         const orderData = req.body;
@@ -119,14 +133,7 @@ async function postNewPaymentOrder(req, res) {
         }
         else {
             if (orderData.paymentGateway === "paypal") {
-                let result1 = (await post(`${process.env.PAYPAL_BASE_API_URL}/v1/oauth2/token`, {
-                    "grant_type": "client_credentials"
-                }, {
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded",
-                        "Authorization": `Basic ${Buffer.from(`${process.env.PAYPAL_API_USER_NAME}:${process.env.PAYPAL_API_PASSWORD}`).toString("base64")}`
-                    }
-                })).data;
+                let result1 = await createPaypalToken();
                 result1 = (await post(`${process.env.PAYPAL_BASE_API_URL}/v2/checkout/orders`, {
                     "intent": "CAPTURE",
                     "purchase_units": [
@@ -154,7 +161,6 @@ async function postNewPaymentOrder(req, res) {
         }
     }
     catch (err) {
-        console.log(err.message)
         res.status(500).json(getResponseObject(getSuitableTranslations("Internal Server Error !!", req.query.language), true, {}));
     }
 }
@@ -164,7 +170,12 @@ async function postCheckoutComplete(req, res) {
         const result = await ordersManagmentFunctions.changeCheckoutStatusToSuccessfull(req.params.orderId, req.query.language);
         res.json(result);
         if (!result.error) {
-            await sendReceiveOrderEmail(result.data.billingAddress.email, result.data, "ar");
+            try {
+                await sendReceiveOrderEmail(result.data.billingAddress.email, result.data, "ar");
+            }
+            catch (err) {
+                console.log(err);
+            }
         }
     }
     catch (err) {
@@ -174,15 +185,38 @@ async function postCheckoutComplete(req, res) {
 
 async function postPaypalCheckoutComplete(req, res) {
     try {
-        console.log(req.body);
-        res.json("yes");
-        // const result = await ordersManagmentFunctions.changeCheckoutStatusToSuccessfull(req.params.orderId, req.query.language);
-        // res.json(result);
-        // if (!result.error) {
-        //     await sendReceiveOrderEmail(result.data.billingAddress.email, result.data, "ar");
-        // }
+        const result = req.body;
+        if (result?.event_type === "CHECKOUT.ORDER.APPROVED") {
+            let result1 = await createPaypalToken();
+            result1 = (await post(`${process.env.PAYPAL_BASE_API_URL}/v2/checkout/orders/${result.resource.id}/capture`, {}, {
+                headers: {
+                    Authorization: `Bearer ${result1.access_token}`
+                }
+            })).data;
+            console.log(result1, result.purchase_units[0]);
+            if (result1.status === "COMPLETED") {
+                result1 = await ordersManagmentFunctions.changeCheckoutStatusToSuccessfull(result.purchase_units[0].custom_id, "en");
+                res.json(result1);
+                if (!result1.error) {
+                    try {
+                        await sendReceiveOrderEmail(result1.data.billingAddress.email, result1.data, "ar");
+                        return;
+                    }
+                    catch (err) {
+                        console.log(err);
+                        return;
+                    }
+                }
+            }
+        }
+        res.json({
+            msg: "Sorry, This Event Type Is Not Valid !!",
+            error: true,
+            data: {}
+        });
     }
     catch (err) {
+        console.log(err.message);
         res.status(500).json(getResponseObject(getSuitableTranslations("Internal Server Error !!", req.query.language), true, {}));
     }
 }
