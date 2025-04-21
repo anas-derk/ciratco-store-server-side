@@ -134,7 +134,8 @@ async function postNewPaymentOrder(req, res) {
                             "amount": {
                                 "currency_code": "USD",
                                 "value": result.data.orderAmount
-                            }
+                            },
+                            "custom_id": result.data._id
                         }
                     ],
                     "application_context": {
@@ -146,7 +147,7 @@ async function postNewPaymentOrder(req, res) {
                         Authorization: `Bearer ${result1.access_token}`
                     }
                 })).data;
-                return res.json(getResponseObject(getSuitableTranslations("Creating New Payment Order By Tap Process Has Been Successfully !!", language), false, {
+                return res.json(getResponseObject(getSuitableTranslations("Creating New Payment Order By Paypal Process Has Been Successfully !!", language), false, {
                     paymentURL: result1.links[1].href
                 }));
             }

@@ -378,6 +378,19 @@ async function updateOrder(authorizationId, orderId, newOrderDetails, language) 
     }
 }
 
+async function addPaymentGatewayId(orderId, paymentGatewayId, language) {
+    try {
+        await orderModel.updateOne({ _id: orderId }, { paymentGatewayId });
+        return {
+            msg: getSuitableTranslations("Updating Order Payment Gateway Id Details Process Has Been Successfully !!", language),
+            error: false,
+            data: {},
+        }
+    } catch (err) {
+        throw Error(err);
+    }
+}
+
 async function changeCheckoutStatusToSuccessfull(orderId, language) {
     try {
         const order = await orderModel.findOneAndUpdate({ _id: orderId }, { checkoutStatus: "Checkout Successfull" });
@@ -605,6 +618,7 @@ module.exports = {
     getOrderDetails,
     createNewOrder,
     updateOrder,
+    addPaymentGatewayId,
     changeCheckoutStatusToSuccessfull,
     updateOrderProduct,
     deleteOrder,

@@ -557,6 +557,10 @@ const orderSchema = new mongoose.Schema({
             "stripe"
         ],
     },
+    orderPaymentGatewayId: {
+        type: String,
+        default: ""
+    },
     status: {
         type: String,
         default: "pending",
