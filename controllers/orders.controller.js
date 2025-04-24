@@ -168,7 +168,7 @@ async function postNewPaymentOrder(req, res) {
                 result.data.products.forEach((item, index) => {
                     params.append(`line_items[${index}][price_data][currency]`, "usd");
                     params.append(`line_items[${index}][price_data][unit_amount]`, item.unitPrice.toString());
-                    params.append(`line_items[${index}][price_data][product_data][name]`, item.name);
+                    params.append(`line_items[${index}][price_data][product_data][name]`, item.name[language]);
                     params.append(`line_items[${index}][quantity]`, item.quantity.toString());
                   });
                 let result1 = (await post(
