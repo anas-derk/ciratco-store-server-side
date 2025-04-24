@@ -132,6 +132,8 @@ async function postNewPaymentOrder(req, res) {
             return res.json(result);
         }
         else {
+            const success_url = `${process.env.NODE_ENV === "test" ? `http://localhost:3000/confirmation/${result.data._id}?country=${req.query.country}` : process.env.WEBSITE_URL}/confirmation/${result.data._id}?country=${req.query.country}`,
+                cancel_url = `${process.env.NODE_ENV === "test" ? `http://localhost:3000/checkout/${result.data._id}?country=${req.query.country}` : process.env.WEBSITE_URL}/checkout/${result.data._id}?country=${req.query.country}`;
             if (orderData.paymentGateway === "paypal") {
                 let result1 = await createPaypalToken();
                 result1 = (await post(`${process.env.PAYPAL_BASE_API_URL}/v2/checkout/orders`, {
@@ -146,8 +148,8 @@ async function postNewPaymentOrder(req, res) {
                         }
                     ],
                     "application_context": {
-                        "return_url": `${process.env.NODE_ENV === "test" ? `http://localhost:3000/confirmation/${result.data._id}?country=${req.query.country}` : process.env.WEBSITE_URL}/confirmation/${result.data._id}?country=${req.query.country}`,
-                        "cancel_url": `${process.env.NODE_ENV === "test" ? `http://localhost:3000/checkout/${result.data._id}?country=${req.query.country}` : process.env.WEBSITE_URL}/checkout/${result.data._id}?country=${req.query.country}`
+                        "return_url": success_url,
+                        "cancel_url": cancel_url
                     }
                 }, {
                     headers: {
@@ -157,6 +159,31 @@ async function postNewPaymentOrder(req, res) {
                 return res.json(getResponseObject(getSuitableTranslations("Creating New Payment Order By Paypal Process Has Been Successfully !!", language), false, {
                     paymentURL: result1.links[1].href
                 }));
+            } else {
+                const params = new URLSearchParams({
+                    mode: "payment",
+                    success_url,
+                    cancel_url,
+                  });
+                result.data.products.forEach((item, index) => {
+                    params.append(`line_items[${index}][price_data][currency]`, "usd");
+                    params.append(`line_items[${index}][price_data][unit_amount]`, item.unitPrice.toString());
+                    params.append(`line_items[${index}][price_data][product_data][name]`, item.name);
+                    params.append(`line_items[${index}][quantity]`, item.quantity.toString());
+                  });
+                let result1 = (await post(
+                    `${process.env.STRIPE_BASE_API_URL}/v1/checkout/sessions`,
+                    params,
+                    {
+                      headers: {
+                        Authorization: `Bearer ${process.env.STRIPE_SECRET_KEY}`,
+                        "Content-Type": "application/x-www-form-urlencoded",
+                      },
+                    }
+                  )).data;
+                  return res.json(getResponseObject(getSuitableTranslations("Creating New Payment Order By Stripe Process Has Been Successfully !!", language), false, {
+                    paymentURL: result1.url
+                  }));
             }
         }
     }
