@@ -253,7 +253,24 @@ const productSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
-    offerDescription: String,
+    offerDescription: {
+        ar: {
+            type: String,
+            default: "",
+        },
+        en: {
+            type: String,
+            default: "",
+        },
+        de: {
+            type: String,
+            default: "",
+        },
+        tr: {
+            type: String,
+            default: "",
+        },
+    },
     numberOfOrders: {
         type: Number,
         default: 0,
