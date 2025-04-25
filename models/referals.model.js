@@ -14,7 +14,7 @@ async function addNewReferal(referalDetails, language) {
                 data: {},
             }
         }
-        const referal = await referalModel.findOne({ email: referalDetails.email });
+        const referal = await referalModel.findOne({ email: referalDetails.email, productId: referalDetails.productId });
         if (referal) {
             return {
                 msg: getSuitableTranslations("Sorry, This Referal Is Already Exist !!", language),
