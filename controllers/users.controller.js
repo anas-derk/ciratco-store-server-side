@@ -168,9 +168,14 @@ async function postAccountVerificationCode(req, res) {
             if (result.error) {
                 return res.json(result);
             }
-            result = await sendVerificationCodeToUserEmail(email);
-            if (!result.error) {
-                return res.json(await addNewAccountVerificationCode(email, result.data, typeOfUse, language));
+            try{
+                result = await sendVerificationCodeToUserEmail(email);
+                if (!result.error) {
+                    return res.json(await addNewAccountVerificationCode(email, result.data, typeOfUse, language));
+                }
+            }
+            catch(err) {
+                console.log(err);
             }
         }
         res.json(result);

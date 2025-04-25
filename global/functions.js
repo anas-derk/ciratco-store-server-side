@@ -53,7 +53,6 @@ function calcOrderTotalPrices(products) {
 }
 
 function transporterObj(bussinessEmailPassword) {
-    // إنشاء ناقل بيانات لسيرفر SMTP مع إعداده 
     const transporter = createTransport({
         host: process.env.SMTP_HOST,
         port: process.env.SMTP_PORT,
