@@ -141,7 +141,7 @@ async function postNewPaymentOrder(req, res) {
                     "purchase_units": [
                         {
                             "amount": {
-                                "currency_code": "USD",
+                                "currency_code": "EUR",
                                 "value": result.data.orderAmount
                             },
                             "custom_id": result.data._id
@@ -166,7 +166,7 @@ async function postNewPaymentOrder(req, res) {
                     cancel_url,
                   });
                 result.data.products.forEach((item, index) => {
-                    params.append(`line_items[${index}][price_data][currency]`, "usd");
+                    params.append(`line_items[${index}][price_data][currency]`, "eur");
                     params.append(`line_items[${index}][price_data][unit_amount]`, (item.unitPrice * 100).toString());
                     params.append(`line_items[${index}][price_data][product_data][name]`, item.name[language ? language : "en"]);
                     params.append(`line_items[${index}][quantity]`, item.quantity.toString());

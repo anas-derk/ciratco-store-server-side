@@ -13,17 +13,14 @@ const isProductLocalOrInternational = (productCountries, shippingCountry) => {
 const getShippingCost = (localProductsLength, internationalProductsLength, shippingMethod, totalPriceAfterDiscount) => {
     let tempShippingCost = { forLocalProducts: 0, forInternationalProducts: 0 };
     if (localProductsLength !== 0) {
-        if (shippingMethod.forLocalProducts === "ubuyblues") {
-            tempShippingCost.forLocalProducts = 3.1;
+        if (totalPriceAfterDiscount < 29.9) {
+            tempShippingCost.forLocalProducts = 3.99;
+        } else {
+            tempShippingCost.forLocalProducts = 0;
         }
     }
     if (internationalProductsLength !== 0) {
-        if (shippingMethod.forInternationalProducts === "normal") {
-            tempShippingCost.forInternationalProducts = totalPriceAfterDiscount * 0.15;
-        }
-        else {
-            tempShippingCost.forInternationalProducts = totalPriceAfterDiscount * 0.25;
-        }
+        tempShippingCost.forInternationalProducts = 0;
     }
     return tempShippingCost;
 }

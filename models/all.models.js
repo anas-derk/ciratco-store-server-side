@@ -355,7 +355,7 @@ const userSchema = new mongoose.Schema({
         },
         country: {
             type: String,
-            default: "KW",
+            default: "DE",
         },
         streetAddress: {
             type: String,
@@ -375,7 +375,7 @@ const userSchema = new mongoose.Schema({
         },
         phoneNumber: {
             type: String,
-            default: "0096560048235",
+            default: "004915563191873",
         },
         email: {
             type: String,
@@ -397,7 +397,7 @@ const userSchema = new mongoose.Schema({
         },
         country: {
             type: String,
-            default: "KW",
+            default: "DE",
         },
         streetAddress: {
             type: String,
@@ -417,7 +417,7 @@ const userSchema = new mongoose.Schema({
         },
         phoneNumber: {
             type: String,
-            default: "0096560048235",
+            default: "004915563191873",
         },
         email: {
             type: String,
@@ -765,12 +765,12 @@ const orderSchema = new mongoose.Schema({
     shippingMethod: {
         forLocalProducts: {
             type: String,
-            enum: ["normal", "ubuyblues"],
+            enum: ["ciratco"],
             required: true
         },
         forInternationalProducts: {
             type: String,
-            enum: ["normal", "fast"],
+            enum: ["ciratco"],
             required: true
         }
     },

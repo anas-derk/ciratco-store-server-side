@@ -148,12 +148,12 @@ function validateIsExistErrorInFiles(req, res, next) {
 
 function validateShippingMethod(req, res, next) {
     const shippingMethod = req.body.shippingMethod;
-    if (!["normal", "ubuyblues"].includes(shippingMethod.forLocalProducts)) {
-        res.status(400).json(getResponseObject("Sorry Shipping Method For Local Products Is Not Valid ( Please Send 'normal' or 'ubuyblues' Value )", true, {}));
+    if (!["ciratco"].includes(shippingMethod.forLocalProducts)) {
+        res.status(400).json(getResponseObject("Sorry Shipping Method For Local Products Is Not Valid ( Please Send 'ciratco' Value )", true, {}));
         return;
     }
-    if (!["normal", "fast"].includes(shippingMethod.forInternationalProducts)) {
-        res.status(400).json(getResponseObject("Sorry Shipping Method For International Products Is Not Valid ( Please Send 'normal' or 'fast' Value )", true, {}));
+    if (!["ciratco"].includes(shippingMethod.forInternationalProducts)) {
+        res.status(400).json(getResponseObject("Sorry Shipping Method For International Products Is Not Valid ( Please Send 'ciratco' Value )", true, {}));
         return;
     }
     next();
