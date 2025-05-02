@@ -164,26 +164,26 @@ async function postNewPaymentOrder(req, res) {
                     mode: "payment",
                     success_url,
                     cancel_url,
-                  });
+                });
                 result.data.products.forEach((item, index) => {
                     params.append(`line_items[${index}][price_data][currency]`, "eur");
                     params.append(`line_items[${index}][price_data][unit_amount]`, (item.unitPrice * 100).toString());
                     params.append(`line_items[${index}][price_data][product_data][name]`, item.name[language ? language : "en"]);
                     params.append(`line_items[${index}][quantity]`, item.quantity.toString());
-                  });
+                });
                 let result1 = (await post(
                     `${process.env.STRIPE_BASE_API_URL}/v1/checkout/sessions`,
                     params,
                     {
-                      headers: {
-                        Authorization: `Bearer ${process.env.STRIPE_SECRET_KEY}`,
-                        "Content-Type": "application/x-www-form-urlencoded",
-                      },
+                        headers: {
+                            Authorization: `Bearer ${process.env.STRIPE_SECRET_KEY}`,
+                            "Content-Type": "application/x-www-form-urlencoded",
+                        },
                     }
-                  )).data;
-                  return res.json(getResponseObject(getSuitableTranslations("Creating New Payment Order By Stripe Process Has Been Successfully !!", language), false, {
+                )).data;
+                return res.json(getResponseObject(getSuitableTranslations("Creating New Payment Order By Stripe Process Has Been Successfully !!", language), false, {
                     paymentURL: result1.url
-                  }));
+                }));
             }
         }
     }
