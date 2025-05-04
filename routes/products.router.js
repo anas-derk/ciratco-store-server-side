@@ -275,12 +275,14 @@ productsRouter.delete("/gallery-images/:productId",
 productsRouter.put("/:productId",
     validateJWT,
     (req, res, next) => {
-        const { name, price, description, categories, discount, quantity, countries } = req.body;
+        const { name, price, description, offerDescriptionBase, offerDescription, categories, discount, quantity, countries } = req.body;
         validateIsExistValueForFieldsAndDataTypes([
             { fieldName: "Product Id", fieldValue: req.params.productId, dataTypes: ["ObjectId"], isRequiredValue: true },
             { fieldName: "Name", fieldValue: name, dataTypes: ["object"], isRequiredValue: false },
             { fieldName: "Price", fieldValue: Number(price), dataTypes: ["number"], isRequiredValue: false },
             { fieldName: "Description", fieldValue: description, dataTypes: ["object"], isRequiredValue: false },
+            { fieldName: "Offer Description Base", fieldValue: offerDescriptionBase, dataTypes: ["string"], isRequiredValue: false },
+            { fieldName: "Offer Description", fieldValue: offerDescription, dataTypes: ["object"], isRequiredValue: false },
             { fieldName: "Categories", fieldValue: categories, dataTypes: ["array"], isRequiredValue: false },
             { fieldName: "Discount", fieldValue: Number(discount), dataTypes: ["number"], isRequiredValue: false },
             { fieldName: "Quantity", fieldValue: Number(quantity), dataTypes: ["number"], isRequiredValue: false },
@@ -308,6 +310,15 @@ productsRouter.put("/:productId",
         if (description) {
             return validateIsExistValueForFieldsAndDataTypes(["ar", "en", "de", "tr"].map((language) => (
                 { fieldName: `New Product Description In ${language.toUpperCase()}`, fieldValue: description[language], dataTypes: ["string"], isRequiredValue: true }
+            )), res, next);
+        }
+        next();
+    },
+    (req, res, next) => {
+        const { offerDescription } = Object.assign({}, req.body);
+        if (offerDescription) {
+            return validateIsExistValueForFieldsAndDataTypes(["ar", "en", "de", "tr"].map((language) => (
+                { fieldName: `New Offer Description In ${language.toUpperCase()}`, fieldValue: offerDescription[language], dataTypes: ["string"], isRequiredValue: true }
             )), res, next);
         }
         next();

@@ -243,7 +243,24 @@ async function deleteImageFromProductGallery(req, res) {
 
 async function putProduct(req, res) {
     try {
-        const result = await productsManagmentFunctions.updateProduct(req.data._id, req.params.productId, req.body, req.query.language);
+        let newProductInfo = req.body;
+        if (newProductInfo.offerDescriptionBase) {
+            const translations = {
+                ar: await translateSentensesByAPI([newProductInfo.offerDescriptionBase], "AR"),
+                en: await translateSentensesByAPI([newProductInfo.offerDescriptionBase], "EN"),
+                de: await translateSentensesByAPI([newProductInfo.offerDescriptionBase], "DE"),
+                tr: await translateSentensesByAPI([newProductInfo.offerDescriptionBase], "TR"),
+            };
+            if (!newProductInfo.offerDescription) {
+                newProductInfo.offerDescription = {
+                    ar: translations.ar[0].text,
+                    en: translations.en[0].text,
+                    de: translations.de[0].text,
+                    tr: translations.tr[0].text,
+                };
+            }
+        }
+        const result = await productsManagmentFunctions.updateProduct(req.data._id, req.params.productId, newProductInfo, req.query.language);
         if (result.error) {
             if (result.msg !== "Sorry, This Product Is Not Exist !!") {
                 return res.status(401).json(result);
