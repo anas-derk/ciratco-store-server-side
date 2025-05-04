@@ -361,10 +361,7 @@ const userSchema = new mongoose.Schema({
             type: String,
             default: "",
         },
-        apartmentNumber: {
-            type: Number,
-            default: 1,
-        },
+        apartmentNumber: Number,
         city: {
             type: String,
             default: "",
@@ -373,10 +370,7 @@ const userSchema = new mongoose.Schema({
             type: String,
             default: "",
         },
-        phoneNumber: {
-            type: String,
-            default: "004915563191873",
-        },
+        phoneNumber: String,
         email: {
             type: String,
             default: "",
@@ -403,10 +397,7 @@ const userSchema = new mongoose.Schema({
             type: String,
             default: "",
         },
-        apartmentNumber: {
-            type: Number,
-            default: 1,
-        },
+        apartmentNumber: Number,
         city: {
             type: String,
             default: "",
@@ -415,10 +406,7 @@ const userSchema = new mongoose.Schema({
             type: String,
             default: "",
         },
-        phoneNumber: {
-            type: String,
-            default: "004915563191873",
-        },
+        phoneNumber: String,
         email: {
             type: String,
             default: "",
