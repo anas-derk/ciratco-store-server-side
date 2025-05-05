@@ -245,20 +245,18 @@ async function putProduct(req, res) {
     try {
         let newProductInfo = req.body;
         if (newProductInfo.offerDescriptionBase) {
-            const translations = {
+            const offerDescriptionBaseTranslations = {
                 ar: await translateSentensesByAPI([newProductInfo.offerDescriptionBase], "AR"),
                 en: await translateSentensesByAPI([newProductInfo.offerDescriptionBase], "EN"),
                 de: await translateSentensesByAPI([newProductInfo.offerDescriptionBase], "DE"),
                 tr: await translateSentensesByAPI([newProductInfo.offerDescriptionBase], "TR"),
             };
-            if (!newProductInfo.offerDescription) {
-                newProductInfo.offerDescription = {
-                    ar: translations.ar[0].text,
-                    en: translations.en[0].text,
-                    de: translations.de[0].text,
-                    tr: translations.tr[0].text,
-                };
-            }
+            newProductInfo.offerDescriptionBaseTranslations = {
+                ar: offerDescriptionBaseTranslations.ar[0].text,
+                en: offerDescriptionBaseTranslations.en[0].text,
+                de: offerDescriptionBaseTranslations.de[0].text,
+                tr: offerDescriptionBaseTranslations.tr[0].text,
+            };
         }
         const result = await productsManagmentFunctions.updateProduct(req.data._id, req.params.productId, newProductInfo, req.query.language);
         if (result.error) {

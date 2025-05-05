@@ -487,6 +487,11 @@ async function updateProduct(authorizationId, productId, newData, language) {
                                 newData.categories = [];
                             }
                         }
+                        if (newData.offerDescriptionBase) {
+                            if (product.offerDescriptionBase !== newData.offerDescriptionBase) {
+                                newData.offerDescription = newData.offerDescriptionBaseTranslations;
+                            }
+                        }
                         await productModel.updateOne({ _id: productId }, newData);
                         return {
                             msg: getSuitableTranslations("Updating Product Info Process Has Been Successfully !!", language),
