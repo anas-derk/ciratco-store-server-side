@@ -33,10 +33,7 @@ const storeSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    ownerLastName: {
-        type: String,
-        required: true,
-    },
+    ownerLastName: String,
     ownerEmail: {
         type: String,
         required: true,
@@ -120,8 +117,8 @@ const storeInfo = {
         tr: process.env.WEBSITE_NAME
     },
     imagePath: "assets/images/stores/Logo.webp",
-    ownerFirstName: "Soliman",
-    ownerLastName: "Asfour",
+    ownerFirstName: process.env.MAIN_ADMIN_FIRST_NAME,
+    ownerLastName: process.env.MAIN_ADMIN_LAST_NAME,
     ownerEmail: process.env.MAIN_ADMIN_EMAIL,
     isApproved: true,
     productsType: {

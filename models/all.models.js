@@ -116,10 +116,7 @@ const storeSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    ownerLastName: {
-        type: String,
-        required: true,
-    },
+    ownerLastName: String,
     ownerEmail: {
         type: String,
         required: true,
