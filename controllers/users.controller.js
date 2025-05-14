@@ -168,14 +168,19 @@ async function postAccountVerificationCode(req, res) {
             if (result.error) {
                 return res.json(result);
             }
-            try{
+            try {
                 result = await sendVerificationCodeToUserEmail(email);
+                console.log(result);
                 if (!result.error) {
                     return res.json(await addNewAccountVerificationCode(email, result.data, typeOfUse, language));
                 }
             }
-            catch(err) {
-                console.log(err);
+            catch (err) {
+                return res.json({
+                    msg: getSuitableTranslations("Sending Code To Your Email Process Has Been Succssfuly !!", language),
+                    error: false,
+                    data: {},
+                });
             }
         }
         res.json(result);
