@@ -117,6 +117,34 @@ async function createPaypalToken() {
     }
 }
 
+async function createInvoiceUsingEasyBill(order) {
+    try {
+        return (await post(`${process.env.INVOICES_SERVICE_BASE_API_URL}/documents`,
+            {
+                "external_id": order._id,
+                "discount_type": "AMOUNT",
+                "order_number": order.orderNumber,
+                "title": `Invoice for Order #${order.orderNumber}`,
+                "shipping_country": "DE",
+                "items": order.products.map((product) => ({
+                    "quantity": product.quantity,
+                    "discount_type": "QUANTITY",
+                    "discount": product.discount * 100,
+                    "single_price_net": product.unitPrice * 100,
+                    "itemType": "PRODUCT"
+                }))
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${process.env.INVOICES_SERVICE_API_KEY}`
+                }
+            })).data;
+    }
+    catch (err) {
+        throw err;
+    }
+}
+
 async function postNewPaymentOrder(req, res) {
     try {
         const orderData = req.body;
