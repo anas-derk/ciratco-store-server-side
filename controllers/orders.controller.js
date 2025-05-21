@@ -192,6 +192,9 @@ async function postNewPaymentOrder(req, res) {
                     mode: "payment",
                     success_url,
                     cancel_url,
+                    metadata: {
+                        order_id: result.data._id
+                    }
                 });
                 result.data.products.forEach((item, index) => {
                     params.append(`line_items[${index}][price_data][currency]`, "eur");
