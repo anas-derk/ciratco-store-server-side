@@ -279,7 +279,7 @@ async function postPaypalCheckoutComplete(req, res) {
 async function postStripeCheckoutComplete(req, res) {
     try {
         const result = req.body;
-        if (result?.object === "event" && result?.data?.object?.payment_status == "paid" && status === "completed" && result?.type === "checkout.session.completed") {
+        if (result?.object === "event" && result?.data?.object?.payment_status == "paid" && result?.data?.object?.status === "completed" && result?.type === "checkout.session.completed") {
             const result1 = await ordersManagmentFunctions.changeCheckoutStatusToSuccessfull(result.data.object.metadata.order_id, "en");
             res.json(result1);
             if (!result1.error) {
