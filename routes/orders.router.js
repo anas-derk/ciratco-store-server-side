@@ -328,6 +328,8 @@ ordersRouter.post("/handle-checkout-complete/:orderId",
 
 ordersRouter.post("/handle-paypal-checkout-complete", ordersController.postPaypalCheckoutComplete);
 
+ordersRouter.post("/handle-stripe-checkout-complete", ordersController.postStripeCheckoutComplete);
+
 ordersRouter.post("/update-order/:orderId",
     validateJWT,
     (req, res, next) => {

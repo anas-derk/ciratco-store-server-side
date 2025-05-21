@@ -270,7 +270,44 @@ async function postPaypalCheckoutComplete(req, res) {
         });
     }
     catch (err) {
-        console.log(err.message);
+        res.status(500).json(getResponseObject(getSuitableTranslations("Internal Server Error !!", req.query.language), true, {}));
+    }
+}
+
+async function postStripeCheckoutComplete(req, res) {
+    try {
+        const result = req.body;
+        console.log(result);
+
+        // if (result?.event_type === "CHECKOUT.ORDER.APPROVED") {
+        //     let result1 = await createPaypalToken();
+        //     result1 = (await post(`${process.env.PAYPAL_BASE_API_URL}/v2/checkout/orders/${result.resource.id}/capture`, {}, {
+        //         headers: {
+        //             Authorization: `Bearer ${result1.access_token}`
+        //         }
+        //     })).data;
+        //     if (result1.status === "COMPLETED") {
+        //         result1 = await ordersManagmentFunctions.changeCheckoutStatusToSuccessfull(result.resource.purchase_units[0].custom_id, "en");
+        //         res.json(result1);
+        //         if (!result1.error) {
+        //             try {
+        //                 await sendReceiveOrderEmail(result1.data.billingAddress.email, result1.data, "ar");
+        //                 return;
+        //             }
+        //             catch (err) {
+        //                 console.log(err);
+        //                 return;
+        //             }
+        //         }
+        //     }
+        // }
+        res.json({
+            msg: "Sorry, This Event Type Is Not Valid !!",
+            error: true,
+            data: {}
+        });
+    }
+    catch (err) {
         res.status(500).json(getResponseObject(getSuitableTranslations("Internal Server Error !!", req.query.language), true, {}));
     }
 }
@@ -353,6 +390,7 @@ module.exports = {
     postNewPaymentOrder,
     postCheckoutComplete,
     postPaypalCheckoutComplete,
+    postStripeCheckoutComplete,
     putOrder,
     putOrderProduct,
     deleteOrder,
