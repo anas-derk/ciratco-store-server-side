@@ -219,7 +219,7 @@ async function postNewPaymentOrder(req, res) {
         }
     }
     catch (err) {
-        console.log(err.message);
+        console.log(err.data.error);
         res.status(500).json(getResponseObject(getSuitableTranslations("Internal Server Error !!", req.query.language), true, {}));
     }
 }
