@@ -251,9 +251,11 @@ async function postPaypalCheckoutComplete(req, res) {
                 }
             })).data;
             if (result1.status === "COMPLETED") {
-                result1 = await ordersManagmentFunctions.changeCheckoutStatusToSuccessfull(result.resource.purchase_units[0].custom_id, "en");
+                const orderId = result.resource.purchase_units[0].custom_id;
+                result1 = await ordersManagmentFunctions.changeCheckoutStatusToSuccessfull(orderId, "en");
                 res.json(result1);
                 if (!result1.error) {
+                    await createInvoiceUsingEasyBill((await ordersManagmentFunctions.getOrderDetails(orderId)).data);
                     try {
                         await sendReceiveOrderEmail(result1.data.billingAddress.email, result1.data, "ar");
                         return;
@@ -280,9 +282,11 @@ async function postStripeCheckoutComplete(req, res) {
     try {
         const result = req.body;
         if (result?.object === "event" && result?.data?.object?.payment_status == "paid" && result?.data?.object?.status === "complete" && result?.type === "checkout.session.completed") {
-            const result1 = await ordersManagmentFunctions.changeCheckoutStatusToSuccessfull(result.data.object.metadata.order_id, "en");
+            const orderId = result.data.object.metadata.order_id;
+            const result1 = await ordersManagmentFunctions.changeCheckoutStatusToSuccessfull(orderId, "en");
             res.json(result1);
             if (!result1.error) {
+                await createInvoiceUsingEasyBill((await ordersManagmentFunctions.getOrderDetails(orderId)).data);
                 try {
                     await sendReceiveOrderEmail(result1.data.billingAddress.email, result1.data, "ar");
                     return;
