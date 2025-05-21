@@ -192,9 +192,7 @@ async function postNewPaymentOrder(req, res) {
                     mode: "payment",
                     success_url,
                     cancel_url,
-                    metadata: {
-                        order_id: result.data._id
-                    }
+                    "metadata[order_id]": result.data._id
                 });
                 result.data.products.forEach((item, index) => {
                     params.append(`line_items[${index}][price_data][currency]`, "eur");
@@ -219,7 +217,7 @@ async function postNewPaymentOrder(req, res) {
         }
     }
     catch (err) {
-        console.log(err.data.error);
+        console.log(err);
         res.status(500).json(getResponseObject(getSuitableTranslations("Internal Server Error !!", req.query.language), true, {}));
     }
 }
