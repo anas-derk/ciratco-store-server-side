@@ -318,7 +318,7 @@ productsRouter.put("/:productId",
         const { offerDescription } = Object.assign({}, req.body);
         if (offerDescription) {
             return validateIsExistValueForFieldsAndDataTypes(["ar", "en", "de", "tr"].map((language) => (
-                { fieldName: `New Offer Description In ${language.toUpperCase()}`, fieldValue: offerDescription[language], dataTypes: ["string"], isRequiredValue: true }
+                { fieldName: `New Offer Description In ${language.toUpperCase()}`, fieldValue: offerDescription[language], dataTypes: ["string"], isRequiredValue: false }
             )), res, next);
         }
         next();
