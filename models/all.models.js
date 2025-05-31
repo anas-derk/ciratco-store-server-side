@@ -890,8 +890,22 @@ const referalModel = mongoose.model("referal", referalShema);
 
 const favoriteProductShema = new mongoose.Schema({
     name: {
-        type: String,
-        required: true,
+        ar: {
+            type: String,
+            required: true,
+        },
+        en: {
+            type: String,
+            required: true,
+        },
+        de: {
+            type: String,
+            required: true,
+        },
+        tr: {
+            type: String,
+            required: true,
+        },
     },
     price: {
         type: Number,
@@ -919,8 +933,22 @@ const favoriteProductModel = mongoose.model("favorite_products", favoriteProduct
 
 const productsWalletShema = new mongoose.Schema({
     name: {
-        type: String,
-        required: true,
+        ar: {
+            type: String,
+            required: true,
+        },
+        en: {
+            type: String,
+            required: true,
+        },
+        de: {
+            type: String,
+            required: true,
+        },
+        tr: {
+            type: String,
+            required: true,
+        },
     },
     price: {
         type: Number,
