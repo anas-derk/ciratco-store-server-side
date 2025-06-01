@@ -119,6 +119,23 @@ const isExistOfferOnProduct = (startDateAsString, endDateAsString) => {
     return false;
 }
 
+async function updateProductsAfterOrder(items) {
+    const bulkOperations = items.map(item => ({
+        updateOne: {
+            filter: {
+                _id: new mongoose.Types.ObjectId(item.productId),
+            },
+            update: {
+                $inc: {
+                    quantity: -item.quantity,
+                    numberOfOrders: item.quantity
+                }
+            }
+        }
+    }));
+    return await productModel.bulkWrite(bulkOperations);
+}
+
 async function createNewOrder(orderDetails, language) {
     try {
         if (orderDetails.userId) {
@@ -271,6 +288,7 @@ async function createNewOrder(orderDetails, language) {
                 await productsWalletModel.insertMany(newProductsForUserInsideTheWallet);
             }
         }
+        await updateProductsAfterOrder(newOrder.products);
         return {
             msg: getSuitableTranslations("Creating New Order Has Been Successfuly !!", language),
             error: false,
