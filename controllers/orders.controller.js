@@ -2,7 +2,7 @@ const { getResponseObject, sendReceiveOrderEmail, sendUpdateOrderEmail, getSuita
 
 const ordersManagmentFunctions = require("../models/orders.model");
 
-const { post } = require("axios");
+const { post, put } = require("axios");
 
 function getFiltersObject(filters) {
     let filtersObject = {};
@@ -117,7 +117,38 @@ async function createPaypalToken() {
     }
 }
 
-async function createInvoiceUsingEasyBill(order) {
+async function createCustomerInEasyBill(order) {
+    try {
+        return (await post(`${process.env.INVOICES_SERVICE_BASE_API_URL}/customers`,
+            {
+                "country": order.billingAddress.country,
+                "city": order.billingAddress.city,
+                "delivery_city": order.billingAddress.city,
+                "delivery_company_name": order.billingAddress.companyName,
+                "delivery_country": order.billingAddress.country,
+                "delivery_first_name": order.billingAddress.firstName,
+                "delivery_last_name": order.billingAddress.lastName,
+                "delivery_salutation": 1,
+                "delivery_street": order.billingAddress.streetAddress,
+                "delivery_zip_code": order.billingAddress.postalCode,
+                "emails": [order.billingAddress.email],
+                "phone_1": order.billingAddress.phone,
+                "first_name": order.billingAddress.firstName,
+                "last_name": order.billingAddress.lastName,
+                "zip_code": order.billingAddress.postalCode,
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${process.env.INVOICES_SERVICE_API_KEY}`
+                }
+            })).data;
+    }
+    catch (err) {
+        throw err;
+    }
+}
+
+async function createInvoiceUsingEasyBill(order, customerId) {
     try {
         return (await post(`${process.env.INVOICES_SERVICE_BASE_API_URL}/documents`,
             {
@@ -132,7 +163,45 @@ async function createInvoiceUsingEasyBill(order) {
                     "discount": product.discount * 100,
                     "single_price_net": product.unitPrice * 100,
                     "itemType": "PRODUCT"
-                }))
+                })),
+                "customer_id": customerId,
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${process.env.INVOICES_SERVICE_API_KEY}`
+                }
+            })).data;
+    }
+    catch (err) {
+        throw err;
+    }
+}
+
+async function registerPaymentToInvoice(order, invoiceId) {
+    try {
+        return (await post(`${process.env.INVOICES_SERVICE_BASE_API_URL}/document-payments`,
+            {
+                "amount": order.orderAmount * 100,
+                "document_id": invoiceId,
+                "payment_at": new Date(),
+                "provider": order.paymentGateway,
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${process.env.INVOICES_SERVICE_API_KEY}`
+                }
+            })).data;
+    }
+    catch (err) {
+        throw err;
+    }
+}
+
+async function makeInvoiceDone(invoiceId) {
+    try {
+        return (await put(`${process.env.INVOICES_SERVICE_BASE_API_URL}/documents/${invoiceId}/done`,
+            {
+                "id": invoiceId,
             },
             {
                 headers: {
@@ -255,7 +324,11 @@ async function postPaypalCheckoutComplete(req, res) {
                 result1 = await ordersManagmentFunctions.changeCheckoutStatusToSuccessfull(orderId, "en");
                 res.json(result1);
                 if (!result1.error) {
-                    await createInvoiceUsingEasyBill((await ordersManagmentFunctions.getOrderDetails(orderId)).data);
+                    const order = (await ordersManagmentFunctions.getOrderDetails(orderId)).data;
+                    const customerResult = await createCustomerInEasyBill(order);
+                    const invoiceResult = await createInvoiceUsingEasyBill(order, customerResult.id);
+                    const doneResult = await makeInvoiceDone(invoiceResult.id);
+                    await registerPaymentToInvoice(order, doneResult.id);
                     try {
                         await sendReceiveOrderEmail(result1.data.billingAddress.email, result1.data, "ar");
                         return;
@@ -286,7 +359,11 @@ async function postStripeCheckoutComplete(req, res) {
             const result1 = await ordersManagmentFunctions.changeCheckoutStatusToSuccessfull(orderId, "en");
             res.json(result1);
             if (!result1.error) {
-                await createInvoiceUsingEasyBill((await ordersManagmentFunctions.getOrderDetails(orderId)).data);
+                const order = (await ordersManagmentFunctions.getOrderDetails(orderId)).data;
+                const customerResult = await createCustomerInEasyBill(order);
+                const invoiceResult = await createInvoiceUsingEasyBill(order, customerResult.id);
+                const doneResult = await makeInvoiceDone(invoiceResult.id);
+                await registerPaymentToInvoice(order, doneResult.id);
                 try {
                     await sendReceiveOrderEmail(result1.data.billingAddress.email, result1.data, "ar");
                     return;
