@@ -7,18 +7,122 @@
         </section>
         <section class="content"
             style="width: 80%; border: 1px solid <%= process.env.WEBSITE_COLOR %>; margin: auto; padding: 20px; line-height: 2;">
-            <h2 style="text-align: center;">Confirmation of store addition request at <%= process.env.WEBSITE_NAME %>
+            <h2 style="text-align: center;">Thank you for shopping at <%= process.env.WEBSITE_NAME %>
             </h2>
             <p>
-                We are pleased to inform you that your request to add your store to our website has been accepted.
+                We're glad you found something you like !
             </p>
             <p>
-                We will start processing and reviewing your request as soon as possible.
+                Your purchase order has been received by <%= process.env.WEBSITE_NAME %>
             </p>
             </p>
             <p>
-                Thank you for choosing to work with us.
+                Order Number: <%= orderDetails.orderNumber %>
             </p>
+            <p>
+                We will start preparing it immediately .
+            </p>
+            <p>
+                Order Summary:
+            </p>
+            <p>
+                Delivery Address:
+            </p>
+            <ul>
+                <li>Full Name: <%= newOrderDetails.shippingAddress.firstName %>
+                        <%= newOrderDetails.shippingAddress.lastName %>
+                </li>
+                <li>Country: <%= newOrderDetails.shippingAddress.country %>
+                </li>
+                <li>City: <%= newOrderDetails.shippingAddress.city %>
+                </li>
+                <li>Street Address / Neighborhood: <%= newOrderDetails.shippingAddress.streetAddress %>
+                </li>
+                <% if (newOrderDetails.shippingAddress.apartmentNumber) { %>
+                    <li>Apartment Number: <%= newOrderDetails.shippingAddress.apartmentNumber %>
+                    </li>
+                    <% } %>
+            </ul>
+            <p>
+                Billing Address:
+            </p>
+            <ul>
+                <li>Full Name: <%= newOrderDetails.billingAddress.firstName %>
+                        <%= newOrderDetails.billingAddress.lastName %>
+                </li>
+                <li>Country: <%= newOrderDetails.billingAddress.country %>
+                </li>
+                <li>City: <%= newOrderDetails.billingAddress.city %>
+                </li>
+                <li>Street Address / Neighborhood: <%= newOrderDetails.billingAddress.streetAddress %>
+                </li>
+                <% if (newOrderDetails.billingAddress.apartmentNumber) { %>
+                    <li>Apartment Number: <%= newOrderDetails.billingAddress.apartmentNumber %>
+                    </li>
+                    <% } %>
+            </ul>
+            <p>
+                Payment Details:
+            </p>
+            <table style="text-align: center; width: 100%;">
+                <thead>
+                    <th style="padding: 10px 0;">Product Image</th>
+                    <th style="padding: 10px 0;">Product Name</th>
+                    <th style="padding: 10px 0;">Quantity</th>
+                    <th style="padding: 10px 0;">Discount</th>
+                    <th style="padding: 10px 0;">Price</th>
+                </thead>
+                <tbody>
+                    <% for( let i=0; i < newOrderDetails.products.length; i++ ) { %>
+                        <tr>
+                            <td style="padding: 10px 0;">
+                                <img src="<%= process.env.BASE_API_URL %>/<%= newOrderDetails.products[i].imagePath %>"
+                                    alt="<%= newOrderDetails.products[i].name[language] %> Image"
+                                    style="width: 100px; height: 100px;" />
+                            </td>
+                            <td style="padding: 10px 0;">
+                                <%= newOrderDetails.products[i].name[language] %>
+                            </td>
+                            <td style="padding: 10px 0;">
+                                <%= newOrderDetails.products[i].quantity %>
+                            </td>
+                            <td style="padding: 10px 0;">
+                                <%= newOrderDetails.products[i].discount %>
+                            </td>
+                            <td style="padding: 10px 0;">
+                                <%= newOrderDetails.products[i].unitPrice %>
+                            </td>
+                        </tr>
+                        <% } %>
+                </tbody>
+            </table>
+            <p>
+                Total Amount: <%= newOrderDetails.totalPriceBeforeDiscount %>
+            </p>
+            <p>
+                Shipping Fee: <%= newOrderDetails.shippingCost.forLocalProducts +
+                    newOrderDetails.shippingCost.forInternationalProducts %>
+            </p>
+            <p>
+                Total Discount: <%= newOrderDetails.totalDiscount %>
+            </p>
+            <p>
+                Final Amount: <%= newOrderDetails.totalPriceAfterDiscount %>
+            </p>
+            <p>
+                Please review our <a href="<%= process.env.WEBSITE_URL %>return-and-refund-policy">Return Policy</a>
+            </p>
+            <p>
+                Our customer service team is ready to assist you at the email:
+            </p>
+            <a href="mailto:<%= process.env.SUPPORT_EMAIL %>">
+                <%= process.env.SUPPORT_EMAIL %>
+            </a>
+            <div class="notes" style="text-align: center; border: 1px solid #000;">
+                <h3>This email has been sent automatically.</h3>
+                <h3>Please do not reply to this message.</h3>
+                <h3>All rights reserved by <%= process.env.WEBSITE_NAME %>.</h3>
+            </div>
             <h4>Best regards,</h4>
             <h4 style="line-height: 0; color: <%= process.env.WEBSITE_COLOR %>;">The <%= process.env.WEBSITE_NAME %>
                     Team</h4>
@@ -166,20 +270,123 @@
                 </section>
                 <section class="content"
                     style="width: 80%; border: 1px solid <%= process.env.WEBSITE_COLOR %>; margin: auto; padding: 20px; line-height: 2;">
-                    <h2 style="text-align: center;">Bestätigung der Anfrage zur Geschäftsergänzung bei <%=
-                            process.env.WEBSITE_NAME %>
+                    <h2 style="text-align: center;">Vielen Dank für Ihren Einkauf bei <%= process.env.WEBSITE_NAME %>
                     </h2>
                     <p>
-                        Wir freuen uns, Ihnen mitteilen zu können, dass Ihr Antrag zur Hinzufügung Ihres Geschäfts zu
-                        unserer Website akzeptiert wurde.
+                        Es freut uns, dass Sie etwas gefunden haben, das Ihnen gefällt !
                     </p>
                     <p>
-                        Wir werden so bald wie möglich mit der Bearbeitung und Überprüfung Ihrer Anfrage beginnen.
+                        Die Bestellung wurde erhalten von <%= process.env.WEBSITE_NAME %>
                     </p>
                     </p>
                     <p>
-                        Vielen Dank, dass Sie sich für eine Zusammenarbeit mit uns entschieden haben.
+                        Bestellnummer: <%= orderDetails.orderNumber %>
                     </p>
+                    <p>
+                        Wir werden sofort mit der Vorbereitung beginnen.
+                    </p>
+                    <p>
+                        Bestellübersicht:
+                    </p>
+                    <p>
+                        Lieferadresse:
+                    </p>
+                    <ul>
+                        <li>Vollständiger Name: <%= newOrderDetails.shippingAddress.firstName %>
+                                <%= newOrderDetails.shippingAddress.lastName %>
+                        </li>
+                        <li>Land: <%= newOrderDetails.shippingAddress.country %>
+                        </li>
+                        <li>Stadt: <%= newOrderDetails.shippingAddress.city %>
+                        </li>
+                        <li>Straßenadresse / Viertel: <%= newOrderDetails.shippingAddress.streetAddress %>
+                        </li>
+                        <% if (newOrderDetails.shippingAddress.apartmentNumber) { %>
+                            <li>Wohnungsnummer: <%= newOrderDetails.shippingAddress.apartmentNumber %>
+                            </li>
+                            <% } %>
+                    </ul>
+                    <p>
+                        Rechnungsadresse:
+                    </p>
+                    <ul>
+                        <li>Vollständiger Name: <%= newOrderDetails.billingAddress.firstName %>
+                                <%= newOrderDetails.billingAddress.lastName %>
+                        </li>
+                        <li>Land: <%= newOrderDetails.billingAddress.country %>
+                        </li>
+                        <li>Stadt: <%= newOrderDetails.billingAddress.city %>
+                        </li>
+                        <li>Straßenadresse / Viertel: <%= newOrderDetails.billingAddress.streetAddress %>
+                        </li>
+                        <% if (newOrderDetails.billingAddress.apartmentNumber) { %>
+                            <li>Wohnungsnummer: <%= newOrderDetails.billingAddress.apartmentNumber %>
+                            </li>
+                            <% } %>
+                    </ul>
+                    <p>
+                        Zahlungsdetails:
+                    </p>
+                    <table style="text-align: center; width: 100%;">
+                        <thead>
+                            <th style="padding: 10px 0;">Produktbild</th>
+                            <th style="padding: 10px 0;">Produktname</th>
+                            <th style="padding: 10px 0;">Menge</th>
+                            <th style="padding: 10px 0;">Rabatt</th>
+                            <th style="padding: 10px 0;">Preis</th>
+                        </thead>
+                        <tbody>
+                            <% for( let i=0; i < newOrderDetails.products.length; i++ ) { %>
+                                <tr>
+                                    <td style="padding: 10px 0;">
+                                        <img src="<%= process.env.BASE_API_URL %>/<%= newOrderDetails.products[i].imagePath %>"
+                                            alt="<%= newOrderDetails.products[i].name[language] %> Image"
+                                            style="width: 100px; height: 100px;" />
+                                    </td>
+                                    <td style="padding: 10px 0;">
+                                        <%= newOrderDetails.products[i].name[language] %>
+                                    </td>
+                                    <td style="padding: 10px 0;">
+                                        <%= newOrderDetails.products[i].quantity %>
+                                    </td>
+                                    <td style="padding: 10px 0;">
+                                        <%= newOrderDetails.products[i].discount %>
+                                    </td>
+                                    <td style="padding: 10px 0;">
+                                        <%= newOrderDetails.products[i].unitPrice %>
+                                    </td>
+                                </tr>
+                                <% } %>
+                        </tbody>
+                    </table>
+                    <p>
+                        Gesamtbetrag: <%= newOrderDetails.totalPriceBeforeDiscount %>
+                    </p>
+                    <p>
+                        Versandkosten: <%= newOrderDetails.shippingCost.forLocalProducts +
+                            newOrderDetails.shippingCost.forInternationalProducts %>
+                    </p>
+                    <p>
+                        Gesamtrabatt: <%= newOrderDetails.totalDiscount %>
+                    </p>
+                    <p>
+                        Endbetrag: <%= newOrderDetails.totalPriceAfterDiscount %>
+                    </p>
+                    <p>
+                        Bitte sehen Sie sich unsere <a
+                            href="<%= process.env.WEBSITE_URL %>return-and-refund-policy">Rückgabebedingungen</a> an.
+                    </p>
+                    <p>
+                        Unser Kundenserviceteam steht Ihnen per E-Mail zur Verfügung:
+                    </p>
+                    <a href="mailto:<%= process.env.SUPPORT_EMAIL %>">
+                        <%= process.env.SUPPORT_EMAIL %>
+                    </a>
+                    <div class="notes" style="text-align: center; border: 1px solid #000;">
+                        <h3>Diese E-Mail wurde automatisch gesendet.</h3>
+                        <h3>Bitte antworten Sie nicht auf diese Nachricht.</h3>
+                        <h3>Alle Rechte vorbehalten bei <%= process.env.WEBSITE_NAME %>.</h3>
+                    </div>
                     <h4>Mit freundlichen Grüßen,</h4>
                     <h4 style="line-height: 0; color: <%= process.env.WEBSITE_COLOR %>;">Das <%=
                             process.env.WEBSITE_NAME %>-Team</h4>
@@ -195,20 +402,125 @@
                     </section>
                     <section class="content"
                         style="width: 80%; border: 1px solid <%= process.env.WEBSITE_COLOR %>; margin: auto; padding: 20px; line-height: 2;">
-                        <h2 style="text-align: center;">
-                            <%= process.env.WEBSITE_NAME %>'ta mağaza ekleme talebinin onayı
+                        <h2 style="text-align: center;">Alışveriş yaptığınız için teşekkür ederiz <%=
+                                process.env.WEBSITE_NAME %>
                         </h2>
                         <p>
-                            Mağazanızı web sitemize ekleme talebinizin kabul edildiğini bildirmekten mutluluk duyarız.
+                            Hoşunuza giden bir şey bulmanıza sevindik !
                         </p>
                         <p>
-                            Talebinizi en kısa sürede işlemeye ve incelemeye başlayacağız.
+                            Satın alma siparişi ... tarafından alındı <%= process.env.WEBSITE_NAME %>
                         </p>
                         </p>
                         <p>
-                            Bizimle çalışmayı seçtiğiniz için teşekkür ederiz.
+                            Sipariş Numarası: <%= orderDetails.orderNumber %>
                         </p>
-                        <h4>Saygılarımla,</h4>
+                        <p>
+                            Hemen hazırlamaya başlayacağız .
+                        </p>
+                        <p>
+                            Sipariş Özeti:
+                        </p>
+                        <p>
+                            Teslimat Adresi:
+                        </p>
+                        <ul>
+                            <li>Tam Adı: <%= newOrderDetails.shippingAddress.firstName %>
+                                    <%= newOrderDetails.shippingAddress.lastName %>
+                            </li>
+                            <li>Ülke: <%= newOrderDetails.shippingAddress.country %>
+                            </li>
+                            <li>Şehir: <%= newOrderDetails.shippingAddress.city %>
+                            </li>
+                            <li>Sokak Adresi / Mahalle: <%= newOrderDetails.shippingAddress.streetAddress %>
+                            </li>
+                            <% if (newOrderDetails.shippingAddress.apartmentNumber) { %>
+                                <li>Daire Numarası: <%= newOrderDetails.shippingAddress.apartmentNumber %>
+                                </li>
+                                <% } %>
+                        </ul>
+                        <p>
+                            Fatura Adresi:
+                        </p>
+                        <ul>
+                            <li>Tam Adı: <%= newOrderDetails.billingAddress.firstName %>
+                                    <%= newOrderDetails.billingAddress.lastName %>
+                            </li>
+                            <li>Ülke: <%= newOrderDetails.billingAddress.country %>
+                            </li>
+                            <li>Şehir: <%= newOrderDetails.billingAddress.city %>
+                            </li>
+                            <li>Sokak Adresi / Mahalle: <%= newOrderDetails.billingAddress.streetAddress %>
+                            </li>
+                            <% if (newOrderDetails.billingAddress.apartmentNumber) { %>
+                                <li>Daire Numarası: <%= newOrderDetails.billingAddress.apartmentNumber %>
+                                </li>
+                                <% } %>
+                        </ul>
+                        <p>
+                            Ödeme Detayları:
+                        </p>
+                        <table style="text-align: center; width: 100%;">
+                            <thead>
+                                <th style="padding: 10px 0;">Ürün Resmi</th>
+                                <th style="padding: 10px 0;">Ürün Adı</th>
+                                <th style="padding: 10px 0;">Miktar</th>
+                                <th style="padding: 10px 0;">İndirim</th>
+                                <th style="padding: 10px 0;">Fiyat</th>
+                            </thead>
+                            <tbody>
+                                <% for( let i=0; i < newOrderDetails.products.length; i++ ) { %>
+                                    <tr>
+                                        <td style="padding: 10px 0;">
+                                            <img src="<%= process.env.BASE_API_URL %>/<%= newOrderDetails.products[i].imagePath %>"
+                                                alt="<%= newOrderDetails.products[i].name[language] %> Image"
+                                                style="width: 100px; height: 100px;" />
+                                        </td>
+                                        <td style="padding: 10px 0;">
+                                            <%= newOrderDetails.products[i].name[language] %>
+                                        </td>
+                                        <td style="padding: 10px 0;">
+                                            <%= newOrderDetails.products[i].quantity %>
+                                        </td>
+                                        <td style="padding: 10px 0;">
+                                            <%= newOrderDetails.products[i].discount %>
+                                        </td>
+                                        <td style="padding: 10px 0;">
+                                            <%= newOrderDetails.products[i].unitPrice %>
+                                        </td>
+                                    </tr>
+                                    <% } %>
+                            </tbody>
+                        </table>
+                        <p>
+                            Toplam Tutar: <%= newOrderDetails.totalPriceBeforeDiscount %>
+                        </p>
+                        <p>
+                            Kargo Ücreti: <%= newOrderDetails.shippingCost.forLocalProducts +
+                                newOrderDetails.shippingCost.forInternationalProducts %>
+                        </p>
+                        <p>
+                            Toplam İndirim: <%= newOrderDetails.totalDiscount %>
+                        </p>
+                        <p>
+                            Son Tutar: <%= newOrderDetails.totalPriceAfterDiscount %>
+                        </p>
+                        <p>
+                            Lütfen <a href="<%= process.env.WEBSITE_URL %>return-and-refund-policy">Politikasını</a>
+                            inceleyin.
+                        </p>
+                        <p>
+                            Müşteri hizmetleri ekibimiz size e-posta ile yardımcı olmaya hazır:
+                        </p>
+                        <a href="mailto:<%= process.env.SUPPORT_EMAIL %>">
+                            <%= process.env.SUPPORT_EMAIL %>
+                        </a>
+                        <div class="notes" style="text-align: center; border: 1px solid #000;">
+                            <h3>Bu e-posta otomatik olarak gönderilmiştir.</h3>
+                            <h3>Lütfen bu mesaja yanıt vermeyin</h3>
+                            <h3>Tüm hakları Ubuyblues’a aittir</h3>
+                        </div>
+                        <h4>Saygılarımızla,</h4>
                         <h4 style="line-height: 0; color: <%= process.env.WEBSITE_COLOR %>;">
                             <%= process.env.WEBSITE_NAME %> Ekibi
                         </h4>
