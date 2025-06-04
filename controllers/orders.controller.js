@@ -165,6 +165,7 @@ async function createInvoiceUsingEasyBill(order, customerId) {
                     "itemType": "PRODUCT"
                 })),
                 "customer_id": customerId,
+                "discount": order.totalDiscount * 100
             },
             {
                 headers: {
