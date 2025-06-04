@@ -67,11 +67,11 @@
                         <tr>
                             <td style="padding: 10px 0;">
                                 <img src="<%= process.env.BASE_API_URL %>/<%= newOrderDetails.products[i].imagePath %>"
-                                    alt="<%= newOrderDetails.products[i].name %> Image"
+                                    alt="<%= newOrderDetails.products[i].name[language] %> Image"
                                     style="width: 100px; height: 100px;" />
                             </td>
                             <td style="padding: 10px 0;">
-                                <%= newOrderDetails.products[i].name %>
+                                <%= newOrderDetails.products[i].name[language] %>
                             </td>
                             <td style="padding: 10px 0;">
                                 <%= newOrderDetails.products[i].quantity %>
@@ -188,11 +188,11 @@
                             <tr>
                                 <td style="padding: 10px 0;">
                                     <img src="<%= process.env.BASE_API_URL %>/<%= newOrderDetails.products[i].imagePath %>"
-                                        alt="<%= newOrderDetails.products[i].name %> Image"
+                                        alt="<%= newOrderDetails.products[i].name[language] %> Image"
                                         style="width: 100px; height: 100px;" />
                                 </td>
                                 <td style="padding: 10px 0;">
-                                    <%= newOrderDetails.products[i].name %>
+                                    <%= newOrderDetails.products[i].name[language] %>
                                 </td>
                                 <td style="padding: 10px 0;">
                                     <%= newOrderDetails.products[i].quantity %>
@@ -311,11 +311,11 @@
                                 <tr>
                                     <td style="padding: 10px 0;">
                                         <img src="<%= process.env.BASE_API_URL %>/<%= newOrderDetails.products[i].imagePath %>"
-                                            alt="<%= newOrderDetails.products[i].name %> Image"
+                                            alt="<%= newOrderDetails.products[i].name[language] %> Image"
                                             style="width: 100px; height: 100px;" />
                                     </td>
                                     <td style="padding: 10px 0;">
-                                        <%= newOrderDetails.products[i].name %>
+                                        <%= newOrderDetails.products[i].name[language] %>
                                     </td>
                                     <td style="padding: 10px 0;">
                                         <%= newOrderDetails.products[i].quantity %>
@@ -433,11 +433,11 @@
                                     <tr>
                                         <td style="padding: 10px 0;">
                                             <img src="<%= process.env.BASE_API_URL %>/<%= newOrderDetails.products[i].imagePath %>"
-                                                alt="<%= newOrderDetails.products[i].name %> Image"
+                                                alt="<%= newOrderDetails.products[i].name[language] %> Image"
                                                 style="width: 100px; height: 100px;" />
                                         </td>
                                         <td style="padding: 10px 0;">
-                                            <%= newOrderDetails.products[i].name %>
+                                            <%= newOrderDetails.products[i].name[language] %>
                                         </td>
                                         <td style="padding: 10px 0;">
                                             <%= newOrderDetails.products[i].quantity %>
