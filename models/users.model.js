@@ -79,6 +79,7 @@ async function loginByGoogle(userInfo, language) {
                     _id: user._id,
                     isVerified: user.isVerified,
                     provider: "google",
+                    isAlreadyExist: true,
                 },
             };
         }
@@ -97,7 +98,8 @@ async function loginByGoogle(userInfo, language) {
             data: {
                 _id,
                 isVerified,
-                provider: "google"
+                provider: "google",
+                isAlreadyExist: false,
             },
         }
     }

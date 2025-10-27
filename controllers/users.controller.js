@@ -67,6 +67,14 @@ async function loginWithGoogle(req, res) {
                 }),
             },
         });
+        if (!result.data.isAlreadyExist) {
+            try {
+                await sendCongratulationsOnCreatingNewAccountEmail(email, language);
+            }
+            catch (err) {
+                console.log(err);
+            }
+        }
     }
     catch (err) {
         res.status(500).json(getResponseObject(getSuitableTranslations("Internal Server Error !!", req.query.language), true, {}));
