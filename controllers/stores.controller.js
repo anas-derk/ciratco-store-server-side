@@ -243,7 +243,12 @@ async function deleteStore(req, res) {
             return res.json(result);
         }
         res.json(result);
-        unlinkSync(result.data.storeImagePath);
+        try {
+            unlinkSync(result.data.storeImagePath);
+        }
+        catch (err) {
+            console.log(err);
+        }
         try {
             await sendDeleteStoreEmail(result.data.email, result.data.adminId, req.params.storeId, result.data.language);
         }
