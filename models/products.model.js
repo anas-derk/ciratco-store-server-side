@@ -9,27 +9,19 @@ async function addNewProduct(authorizationId, productInfo, language) {
         const admin = await adminModel.findById(authorizationId);
         if (admin) {
             if (!admin.isBlocked) {
-                const product = await productModel.findOne({ name: productInfo.name, categoryId: productInfo.categoryId });
-                if (!product) {
-                    const categories = await categoryModel.find({ _id: { $in: productInfo.categories } });
-                    if (categories.length === productInfo.categories.length) {
-                        productInfo.categories = categories.map((category) => category._id);
-                        productInfo.storeId = admin.storeId;
-                        await (new productModel(productInfo)).save();
-                        return {
-                            msg: getSuitableTranslations("Adding New Product Process Has Been Successfuly !!", language),
-                            error: false,
-                            data: {},
-                        }
-                    }
+                const categories = await categoryModel.find({ _id: { $in: productInfo.categories } });
+                if (categories.length === productInfo.categories.length) {
+                    productInfo.categories = categories.map((category) => category._id);
+                    productInfo.storeId = admin.storeId;
+                    await (new productModel(productInfo)).save();
                     return {
-                        msg: getSuitableTranslations("Sorry, This Category Is Not Exist !!", language),
-                        error: true,
+                        msg: getSuitableTranslations("Adding New Product Process Has Been Successfuly !!", language),
+                        error: false,
                         data: {},
                     }
                 }
                 return {
-                    msg: getSuitableTranslations("Sorry, This Product Is Already Exist !!", language),
+                    msg: getSuitableTranslations("Sorry, This Category Is Not Exist !!", language),
                     error: true,
                     data: {},
                 }
