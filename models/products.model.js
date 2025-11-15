@@ -285,24 +285,24 @@ async function getAllFlashProductsInsideThePage(pageNumber, pageSize, filters, s
     }
 }
 
-async function getRelatedProductsInTheProduct(productId, language) {
+async function getRelatedProductsInTheProduct(authorizationId, productId, language) {
     try {
         const productInfo = await productModel.findById(productId);
         if (productInfo) {
+            let products = await productModel.aggregate([
+                { $match: { categories: { $in: productInfo.categories }, _id: { $ne: new mongoose.Types.ObjectId(productId) } } },
+                { $sample: { size: 10 } }
+            ]);
+            const currentDate = new Date();
+            for (let product of products) {
+                product.isExistOffer = product.startDiscountPeriod <= currentDate && product.endDiscountPeriod >= currentDate ? true : false;
+                product.isFavoriteProductForUser = authorizationId ? (await favoriteProductModel.findOne({ productId: product._id, userId: authorizationId }) ? true : false) : false;
+            }
+            products = await productModel.populate(products, "categories");
             return {
                 msg: getSuitableTranslations("Get Sample From Related Products In This Product Process Has Been Successfuly !!", language),
                 error: false,
-                data: await productModel.populate((await productModel.aggregate([
-                    {
-                        $match: {
-                            categories: { $in: productInfo.categories },
-                            _id: { $ne: new mongoose.Types.ObjectId(productId) }
-                        }
-                    },
-                    { $sample: { size: 10 } }
-                ])), {
-                    path: "categories",
-                }),
+                data: products,
             }
         }
         return {
