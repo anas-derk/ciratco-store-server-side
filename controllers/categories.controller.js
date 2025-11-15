@@ -36,7 +36,7 @@ async function postNewCategory(req, res) {
         };
         const result = await categoriesManagmentFunctions.addNewCategory(req.data._id, categoryInfo, req.query.language);
         if (result.error) {
-            if (result.msg === "Sorry, This Admin Has Been Blocked !!" || result.msg === "Sorry, This Admin Is Not Exist !!") {
+            if (result.msg !== "Sorry, This Cateogry Is Already Exist !!" && result.msg !== "Sorry, This Parent Cateogry Is Not Exist !!") {
                 return res.status(401).json(result);
             }
         }
