@@ -110,10 +110,10 @@ function getFiltersAndSortDetailsObject(queryObject) {
         if (objectKey === "category") filtersObject[objectKey] = queryObject[objectKey];
         if (objectKey === "storeId") filtersObject[objectKey] = queryObject[objectKey];
         if (objectKey === "name") filtersObject["$or"] = [
-            { "name.ar": { $regex: new RegExp(queryObject[objectKey], 'i') } },
-            { "name.en": { $regex: new RegExp(queryObject[objectKey], 'i') } },
-            { "name.de": { $regex: new RegExp(queryObject[objectKey], 'i') } },
-            { "name.tr": { $regex: new RegExp(queryObject[objectKey], 'i') } },
+            { "name.ar": { $regex: new RegExp(`^${queryObject[objectKey]}`, 'i') } },
+            { "name.en": { $regex: new RegExp(`^${queryObject[objectKey]}`, 'i') } },
+            { "name.de": { $regex: new RegExp(`^${queryObject[objectKey]}`, 'i') } },
+            { "name.tr": { $regex: new RegExp(`^${queryObject[objectKey]}`, 'i') } },
         ];
         if (objectKey === "sortBy") sortDetailsObject[objectKey] = queryObject[objectKey];
         if (objectKey === "sortType") sortDetailsObject[objectKey] = queryObject[objectKey];

@@ -7,10 +7,10 @@ function getFiltersObject(filters) {
     for (let objectKey in filters) {
         if (objectKey === "storeId") filtersObject[objectKey] = filters[objectKey];
         if (objectKey === "name") filtersObject["$or"] = [
-            { "name.ar": { $regex: new RegExp(filters[objectKey], 'i') } },
-            { "name.en": { $regex: new RegExp(filters[objectKey], 'i') } },
-            { "name.de": { $regex: new RegExp(filters[objectKey], 'i') } },
-            { "name.tr": { $regex: new RegExp(filters[objectKey], 'i') } },
+            { "name.ar": { $regex: new RegExp(`^${filters[objectKey]}`, 'i') } },
+            { "name.en": { $regex: new RegExp(`^${filters[objectKey]}`, 'i') } },
+            { "name.de": { $regex: new RegExp(`^${filters[objectKey]}`, 'i') } },
+            { "name.tr": { $regex: new RegExp(`^${filters[objectKey]}`, 'i') } },
         ];
         if (objectKey === "categoryId") filtersObject[objectKey] = filters[objectKey];
         if (objectKey === "parent") {
