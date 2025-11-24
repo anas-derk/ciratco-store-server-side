@@ -180,7 +180,7 @@ async function getAllFlashProductsInsideThePage(req, res) {
 
 async function getRelatedProductsInTheProduct(req, res) {
     try {
-        res.json(await productsManagmentFunctions.getRelatedProductsInTheProduct(req.params.productId, req.query.language));
+        res.json(await productsManagmentFunctions.getRelatedProductsInTheProduct(req?.data?._id, req.params.productId, req.query.language));
     }
     catch (err) {
         res.status(500).json(getResponseObject(getSuitableTranslations("Internal Server Error !!", req.query.language), true, {}));

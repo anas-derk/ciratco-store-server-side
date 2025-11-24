@@ -1,6 +1,6 @@
 // Import Product Model Object
 
-const { productModel, categoryModel, adminModel, mongoose } = require("../models/all.models");
+const { productModel, categoryModel, adminModel, mongoose, favoriteProductModel } = require("../models/all.models");
 
 const { getSuitableTranslations } = require("../global/functions");
 
