@@ -2,7 +2,7 @@
 
 const { productModel, categoryModel, adminModel, mongoose, favoriteProductModel } = require("../models/all.models");
 
-const { getSuitableTranslations } = require("../global/functions");
+const { getSuitableTranslations, translateSentensesByAPI } = require("../global/functions");
 
 async function addNewProduct(authorizationId, productInfo, language) {
     try {
@@ -481,7 +481,18 @@ async function updateProduct(authorizationId, productId, newData, language) {
                         }
                         if (newData.offerDescriptionBase) {
                             if (product.offerDescriptionBase !== newData.offerDescriptionBase) {
-                                newData.offerDescription = newData.offerDescriptionBaseTranslations;
+                                const offerDescriptionBaseTranslations = {
+                                    ar: await translateSentensesByAPI([newData.offerDescriptionBase], "AR"),
+                                    en: await translateSentensesByAPI([newData.offerDescriptionBase], "EN"),
+                                    de: await translateSentensesByAPI([newData.offerDescriptionBase], "DE"),
+                                    tr: await translateSentensesByAPI([newData.offerDescriptionBase], "TR"),
+                                };
+                                newData.offerDescription = {
+                                    ar: offerDescriptionBaseTranslations.ar[0].text,
+                                    en: offerDescriptionBaseTranslations.en[0].text,
+                                    de: offerDescriptionBaseTranslations.de[0].text,
+                                    tr: offerDescriptionBaseTranslations.tr[0].text,
+                                };
                             }
                         }
                         await productModel.updateOne({ _id: productId }, newData);
