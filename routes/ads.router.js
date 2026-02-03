@@ -49,7 +49,16 @@ adsRouter.post("/add-new-image-ad",
     adsController.postNewImageAd,
 );
 
-adsRouter.get("/all-ads", adsController.getAllAds);
+adsRouter.get("/all-ads",
+    (req, res, next) => {
+        const queryData = req.query;
+        validateIsExistValueForFieldsAndDataTypes([
+            { fieldName: "Store Id", fieldValue: queryData?.storeId, dataTypes: ["ObjectId"], isRequiredValue: false },
+            { fieldName: "Product", fieldValue: queryData?.product, dataTypes: ["ObjectId"], isRequiredValue: false },
+        ], res, next);
+    },
+    adsController.getAllAds
+);
 
 adsRouter.delete("/:adId",
     validateJWT,

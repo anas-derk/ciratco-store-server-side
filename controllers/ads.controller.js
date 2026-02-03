@@ -8,6 +8,7 @@ function getFiltersObject(filters) {
     let filtersObject = {};
     for (let objectKey in filters) {
         if (objectKey === "storeId") filtersObject[objectKey] = filters[objectKey];
+        if (objectKey === "product") filtersObject[objectKey] = filters[objectKey];
     }
     return filtersObject;
 }
