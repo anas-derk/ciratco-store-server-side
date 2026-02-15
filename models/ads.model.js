@@ -9,7 +9,7 @@ async function addNewAd(authorizationId, adsInfo, language) {
         const admin = await adminModel.findById(authorizationId);
         if (admin) {
             if (!admin.isBlocked) {
-                if (await adsModel.countDocuments({ type: adsInfo.type }) >= 10) {
+                if (await adsModel.countDocuments({ type: adsInfo.type, storeId: admin.storeId }) >= 10) {
                     return {
                         msg: getSuitableTranslations("Sorry, Can't Add New Text Ad Because Arrive To Max Limits For Text Ads Count ( Limits: 10 ) !!", language),
                         error: true,
