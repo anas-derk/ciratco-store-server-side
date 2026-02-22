@@ -121,6 +121,7 @@ async function postNewStore(req, res) {
         }
         else {
             try {
+                console.log(result)
                 await sendConfirmRequestAddStoreArrivedEmail(result.data.ownerEmail, result.data.language);
                 await sendReceiveAddStoreRequestEmail(process.env.BUSSINESS_EMAIL, result.data);
             } catch (err) {
