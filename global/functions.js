@@ -174,7 +174,6 @@ async function sendRejectStoreEmail(email, language) {
 
 async function sendConfirmRequestAddStoreArrivedEmail(email, language) {
     const result = await getPasswordForBussinessEmail(process.env.BUSSINESS_EMAIL);
-    console.log(result)
     if (!result.error) {
         const templateContent = readFileSync(join(__dirname, "..", "assets", "email_templates", "confirm_request_add_store_arrived.ejs"), "utf-8");
         const compiledTemplate = compile(templateContent);
