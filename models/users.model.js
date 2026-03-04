@@ -38,7 +38,7 @@ async function createNewUser(email, password, language) {
 
 async function login(email, password, language) {
     try {
-        const user = await userModel.findOne({ email, provider: "same-site" });
+        const user = await userModel.findOne({ email });
         if (user) {
             if (await compare(password, user.password)) {
                 return {
