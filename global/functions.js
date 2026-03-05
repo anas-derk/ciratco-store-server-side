@@ -69,6 +69,15 @@ function transporterObj(bussinessEmailPassword) {
     return transporter;
 }
 
+const getDateFormated = (date) => {
+    let orderedDateInDateFormat = new Date(date);
+    const year = orderedDateInDateFormat.getFullYear();
+    const month = orderedDateInDateFormat.getMonth() + 1;
+    const day = orderedDateInDateFormat.getDate();
+    orderedDateInDateFormat = `${year} / ${month} / ${day}`;
+    return orderedDateInDateFormat;
+}
+
 async function sendVerificationCodeToUserEmail(email) {
     const result = await getPasswordForBussinessEmail(process.env.BUSSINESS_EMAIL);
     if (!result.error) {
@@ -327,7 +336,7 @@ async function sendChangePasswordEmail(email, language) {
     if (!result.error) {
         const templateContent = readFileSync(join(__dirname, "..", "assets", "email_templates", "change_password.ejs"), "utf-8");
         const compiledTemplate = compile(templateContent);
-        const htmlContentAfterCompilingEjsTemplateFile = compiledTemplate({ language });
+        const htmlContentAfterCompilingEjsTemplateFile = compiledTemplate({ language, date: getDateFormated(Date.now()) });
         return new Promise((resolve, reject) => {
             transporterObj(result.data).sendMail({
                 from: `${process.env.WEBSITE_NAME} <${process.env.BUSSINESS_EMAIL}>`,
