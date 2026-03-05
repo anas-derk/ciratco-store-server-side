@@ -119,11 +119,28 @@ async function getProductsByIds(productsIds, language) {
                 }
                 groupedProducts[storeId].push(product);
             });
+            const storeIds = Object.keys(groupedProducts);
+            const stores = await storeModel.find({
+                _id: { $in: storeIds }
+            });
+            const storeMap = new Map(
+                stores.map(store => [store._id.toString(), store])
+            );
+            const productByIds = storeIds.map(storeId => ({
+                storeId,
+                storeName: storeMap.get(storeId)?.name ?? {
+                    ar: "متجر غير موجود",
+                    en: "Store Not Found",
+                    de: "Geschäft nicht gefunden",
+                    tr: "Mağaza Bulunamadı"
+                },
+                products: groupedProducts[storeId]
+            }));
             return {
                 msg: getSuitableTranslations("Get Products By Ids Process Has Been Successfully !!", language),
                 error: false,
                 data: {
-                    productByIds: Object.keys(groupedProducts).map((storeId) => ({ storeId, products: groupedProducts[storeId] })),
+                    productByIds: productByIds,
                     currentDate: new Date(),
                 },
             }
